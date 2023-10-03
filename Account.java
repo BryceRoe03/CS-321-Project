@@ -4,6 +4,7 @@ public class Account {
     private String[] email;
     private int gender;
     private int alien_number, id_in_system, status;
+    public boolean danielStupid = true;
     
     public void CreateNewAc(String[] information){
 
