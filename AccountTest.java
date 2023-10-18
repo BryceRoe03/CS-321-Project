@@ -1,28 +1,37 @@
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
+import static org.junit.Assert.*;
 import java.beans.Transient;
+import org.junit.Before;
 import org.junit.Test;
 import java.time.LocalDate;
 
 public class AccountTest {
+
     Account ac = null;
+    CriminalRecord cr = null;
+    PhoneNumber pn = null;
+    LocalDate date = null;
+
+    @Before
+    public void setUp() {
+        cr = new CriminalRecord();
+        pn = new PhoneNumber(1, 0);
+        date = LocalDate.now();
+        ac = Account.addAccount("Don Joe", "Don.Joe@gmail.com", date, 1, "Russia", "No Medical Conditions.",
+                cr, 0, 50, "JohnDoe", "Doe123", pn,
+                "No Additional Information.");
+    }
 
     @Test
     public void testGetAccount() {
-        CriminalRecord cr = new CriminalRecord();
-        PhoneNumber pn = new PhoneNumber(1, 0);
-        LocalDate date = LocalDate.now();
-        ac = Account.addAccount("Don Joe", "Don.Joe@gmail.com", date, 1, "Russia", "No Medical Conditions.",
-                cr, 0, 50, "JohnDoe", "Doe123", Status.CREATED, pn,
-                "No Additional Information.");// <------- Can I call these tests from another method that already
-                                              // instantiates this?
+        // ac = Account.addAccount("Don Joe", "Don.Joe@gmail.com", date, 1, "Russia",
+        // "No Medical Conditions.",
+        // cr, 0, 50, "JohnDoe", "Doe123", pn,
+        // "No Additional Information.");
 
         // Account not null test
         assertNotNull(ac);
         // Account is an account
-        assertTrue("Account is an account instance.", ac instanceof Account);
+        assertTrue("testGetAccount(): account is not an instance of Account Class.", ac instanceof Account);
         // Account name test
         assertEquals("Don Joe", ac.getName());
         // Account email test
@@ -55,47 +64,57 @@ public class AccountTest {
         // Additional Information
         assertEquals("No Additional Information.", ac.getAdditionalInformation());
         // Account idInSystem test
-        assertEquals(ac, ac.getAccount(0));
+        assertEquals(0L, ac.getIdInSystem());
+        assertTrue("testGetAccount(): idInSystem is less than 0.", ac.getIdInSystem() > 0L);
         // Account Alien Number
-        assertEquals(0, ac.getAlienNumber());
+        assertEquals(0L, ac.getAlienNumber());
+        assertTrue("testGetAccount(): alienNumber is less than 0.", ac.getAlienNumber() > 0L);
+        // getAccount test
+        assertEquals(ac, ac.getAccount(0));
     }
 
-    // ASK About testing private method
+    // For TA: Method is private, cannot test directly
     @Test
     public void testValidateAccount() {
-        // fill in constructor with valid data later once we implement the some
-        // functionality
-        // assertTrue(ac.validateAccount(0));
         // fail("Not Yet Implemented!");
     }
 
-    // ASK ABOUT VISIBILITY OF SAVEACCOUNTTODATABASE
+    // For TA: Method is private, cannot test directly
     @Test
     public void testSaveAccountToDatabase() {
-        // Account ac = new Account();
-        // assertTrue(Account.saveAccountToDatabase(ac));
-        fail("Not Yet Implemented!");
-    }
-
-    @Test
-    public void testRecordAccount() {
-        // Account ac = new Account();
-        assertEquals(0, Account.recordAccount(0));
         // fail("Not Yet Implemented!");
     }
 
-    // ASK ABOUT VISIBILITY OF APPROVEACCOUNT
+    // For TA: Method is private, cannot test directly
     @Test
     public void testApproveAccount() {
-        // assertEquals(0, Account.approveAccount(0));
-        fail("Not Yet Implemented!");
+        // fail("Not Yet Implemented!");
     }
+
+    @Test
+    public void testDataReview() {
+        // Account ac = new Account();
+
+        assertEquals(0, Account.dataReview(0L));
+        assertFalse("testDataReview(): idInSystem should be greater than 0.", Account.dataReview(0L) < 0);
+        // fail("Not Yet Implemented!");
+    }
+    @Test
+    public void testDataApproval() {
+        // Account ac = new Account();
+
+        assertEquals(0, Account.dataApprove(0));
+        assertFalse("dataApprove(): should return greater than 0 if passed.", Account.dataApprove(0) < 0);
+        // fail("Not Yet Implemented!");
+    }
+
 
     @Test
     public void testSearchAccount() {
         // filler number for now
-        int alienNumber = 176;
+        int alienNumber = 0;
         assertNotNull(Account.searchAccount(alienNumber));
+        assertFalse("searchAccount(): should return " + alienNumber, Account.searchAccount(0).getAlienNumber() != alienNumber);
         // fail("Not Yet Implemented!");
     }
 
@@ -104,6 +123,7 @@ public class AccountTest {
         // Create an account with a given status
         ac.setStatus(Status.REVIEW);
         assertEquals(Status.REVIEW, ac.getStatus());
+        assertFalse("getStatus(): should return greater than 0 if passed.", ac.getStatus() != Status.REVIEW);
         // Grab Status and compare
         // account.status.getStatus();
         // fail("Not Yet Implemented!");

@@ -1,8 +1,9 @@
 import java.time.LocalDate;
 
 public class Account {
-    private static int nextIdInSystem = 0;
-    private static int nextAlienNumber = 0;
+    private static boolean canAssignID = true, canAssignAlienNumber = true;
+    private static long nextIdInSystem = 0;
+    private static long nextAlienNumber = 0;
     // private Account acc = null;
 
     private String name = "";
@@ -16,8 +17,8 @@ public class Account {
     private int lengthOfIntendedeStay = -1;
     private String accountUsername = "";
     private String accountPassword = "";
-    private int alienNumber = -1;
-    private int idInSystem = -1;
+    private long alienNumber = -1;
+    private long idInSystem = -1;
     private Status status = Status.CREATED;
     private PhoneNumber phoneNumber = null;
     private String additionalInformation = "";
@@ -67,11 +68,11 @@ public class Account {
         return this.accountPassword;
     }
 
-    public int getAlienNumber() {
+    public long getAlienNumber() {
         return this.alienNumber;
     }
 
-    public int getIdInSystem() {
+    public long getIdInSystem() {
         return this.idInSystem;
     }
 
@@ -94,8 +95,8 @@ public class Account {
 
     private Account(String name, String email, LocalDate dateofBirth, int gender, String countryOfOrigin,
             String medicalConditions, CriminalRecord criminalRecord, int reasonForEntry, int lengthOfIntendedeStay,
-            String accountUsername, String accountPassword, Status status,
-            PhoneNumber phoneNumber, String additionalInformation) { // don't include alienNumber and idInSystem becuase
+            String accountUsername, String accountPassword,
+            PhoneNumber phoneNumber, String additionalInformation) { // don't include alienNumber, idInSystem, and status becuase
                                                                      // that is assigned by the sytem?
         this.name = name;
         this.email = email;
@@ -104,53 +105,70 @@ public class Account {
         this.countryOfOrigin = countryOfOrigin;
         this.accountUsername = accountUsername;
         this.accountPassword = accountPassword;
+        // status is already set to Status.CREATED
         // assign idInSystem to this value and increment to next available value
         this.idInSystem = nextIdInSystem++;
+        if (idInSystem == Long.MAX_VALUE) {
+            canAssignID = false;
+        }
         // assign alienNumber to this value and increment to next available value
         this.alienNumber = nextAlienNumber++;
-        // status is already set to Status.CREATED
+        if (nextAlienNumber == Long.MAX_VALUE) {
+            canAssignAlienNumber = false;
+        }
         this.phoneNumber = phoneNumber;
         this.additionalInformation = additionalInformation;
 
     }
 
+    // THIS IS RUN FROM DATA ENTRY CALLED AFTER ONSCREENVALIDATION RETURNS TRUE
     public static Account addAccount(String name, String email, LocalDate dateofBirth, int gender, String countryOfOrigin,
             String medicalConditions, CriminalRecord criminalRecord, int reasonForEntry, int lengthOfIntendeStay,
-            String accountUsername, String accountPassword, Status status,
+            String accountUsername, String accountPassword,
             PhoneNumber phoneNumber, String additionalInformation) {
-        // call constructor
-        return new Account(name, email, dateofBirth, gender, countryOfOrigin, medicalConditions, criminalRecord,
-                reasonForEntry, lengthOfIntendeStay, accountUsername, accountPassword, status, phoneNumber,
+        
+        Account tmp = null;
+        // call constructor if idInSystem and alienNumber can be created (less than Long.MAX_VALUE)
+        if (canAssignID && canAssignAlienNumber) {
+            tmp = new Account(name, email, dateofBirth, gender, countryOfOrigin, medicalConditions, criminalRecord,
+                reasonForEntry, lengthOfIntendeStay, accountUsername, accountPassword, phoneNumber,
                 additionalInformation);
+            saveAccountToDatabase(tmp);
+        }
+        return tmp;
     }
 
-    public Account getAccount(int idInSystem) {
+    public Account getAccount(long idInSystem) {
         return null;
     }
 
-    private Boolean validateAccount(int idInSystem) {
+    private Boolean validateAccount(long idInSystem) {
         return false;
     }
 
-    public static Boolean saveAccountToDatabase(Account account) {
+    private static Boolean saveAccountToDatabase(Account account) {
         return false;
     }
 
-    public static int recordAccount(int idInSystem) {
+    // FOR DATA REVIEW
+    public static int dataReview(long idInSystem) {
         // calls both validateAccount() and saveAccountToDatabase()
         // only calls save if validate passes
-
-        // FOR DATA REVIEW
-
         return 0;
     }
 
-    private static int approveAccount(int idInSystem) {
+    // FOR DATA APPROVAL
+    public static int dataApprove(long idInSystem) {
+        // calls both approvaAccount() and saveAccountToDatabase()
+        // only calls save if approve passes
         return 0;
     }
 
-    public static Account searchAccount(int alienNumber) {
+    private static int approveAccount(long idInSystem) {
+        return 0;
+    }
+
+    public static Account searchAccount(long alienNumber) {
         return null;
     }
-
 }
