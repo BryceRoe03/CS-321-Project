@@ -30,7 +30,7 @@ public class Account {
         return 0;
     }
 
-    public Account searchAccount(int alienNumber) {
+    public static Account searchAccount(int alienNumber) {
         return null;
     }
 }
