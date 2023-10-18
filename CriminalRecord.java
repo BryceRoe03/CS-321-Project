@@ -5,6 +5,12 @@ public class CriminalRecord {
     // list of violations
     public String[] violations;
 
+    public CriminalRecord() {
+        this.amount = 0;
+        this.hasRecord = false;
+        this.violations = null;
+    }
+
     public CriminalRecord(int amount, Boolean hasRecord, String[] violations) {
         this.amount = amount;
         this.hasRecord = hasRecord;

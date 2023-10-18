@@ -1,8 +1,8 @@
 public class PhoneNumber {
     public int internationalCode;
-    public int number;
+    public long number;
 
-    public PhoneNumber(int internationalCode, int number) {
+    public PhoneNumber(int internationalCode, long number) {
         this.internationalCode = internationalCode;
         this.number = number;
     }
