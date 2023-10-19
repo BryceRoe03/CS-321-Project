@@ -17,7 +17,7 @@ public class AccountTest {
         pn = new PhoneNumber(1, 0);
         date = LocalDate.now();
         ac = Account.addAccount("Don Joe", "Don.Joe@gmail.com", date, 1, "Russia", "No Medical Conditions.",
-                cr, 0, 50, "JohnDoe", "Doe123", pn,
+                cr, 0, "50 days", "JohnDoe", "Doe123", pn,
                 "No Additional Information.");
     }
 
@@ -25,7 +25,7 @@ public class AccountTest {
     public void testGetAccount() {
         // ac = Account.addAccount("Don Joe", "Don.Joe@gmail.com", date, 1, "Russia",
         // "No Medical Conditions.",
-        // cr, 0, 50, "JohnDoe", "Doe123", pn,
+        // cr, 0, "50 days", "JohnDoe", "Doe123", pn,
         // "No Additional Information.");
 
         // Account not null test
@@ -52,7 +52,7 @@ public class AccountTest {
         // Reason for entry
         assertEquals(0, ac.getReasonForEntry());
         // Length of stay
-        assertEquals(50, ac.getLengthOfIntendedStay());
+        assertEquals("50 days", ac.getLengthOfIntendedStay());
         // Account username
         assertEquals("JohnDoe", ac.getAccountUsername());
         // Account Password

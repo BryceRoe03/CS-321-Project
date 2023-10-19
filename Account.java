@@ -4,6 +4,7 @@ public class Account {
     private static boolean canAssignID = true, canAssignAlienNumber = true;
     private static long nextIdInSystem = 0;
     private static long nextAlienNumber = 0;
+    private static Workflow w;
     // private Account acc = null;
 
     private String name = "";
@@ -14,7 +15,7 @@ public class Account {
     private String medicalConditions = "";
     private CriminalRecord criminalRecord = null;
     private int reasonForEntry = -1;
-    private int lengthOfIntendedeStay = -1;
+    private String lengthOfIntendedStay = "";
     private String accountUsername = "";
     private String accountPassword = "";
     private long alienNumber = -1;
@@ -56,8 +57,8 @@ public class Account {
         return this.reasonForEntry;
     }
 
-    public int getLengthOfIntendedStay() {
-        return this.lengthOfIntendedeStay;
+    public String getLengthOfIntendedStay() {
+        return this.lengthOfIntendedStay;
     }
 
     public String getAccountUsername() {
@@ -93,16 +94,20 @@ public class Account {
         this.status = status;
     }
 
-    private Account(String name, String email, LocalDate dateofBirth, int gender, String countryOfOrigin,
-            String medicalConditions, CriminalRecord criminalRecord, int reasonForEntry, int lengthOfIntendedeStay,
+    private Account(String name, String email, LocalDate dateOfBirth, int gender, String countryOfOrigin,
+            String medicalConditions, CriminalRecord criminalRecord, int reasonForEntry, String lengthOfIntendedStay,
             String accountUsername, String accountPassword,
             PhoneNumber phoneNumber, String additionalInformation) { // don't include alienNumber, idInSystem, and status becuase
                                                                      // that is assigned by the sytem?
         this.name = name;
         this.email = email;
-        this.dateOfBirth = dateofBirth;
+        this.dateOfBirth = dateOfBirth;
         this.gender = gender;
         this.countryOfOrigin = countryOfOrigin;
+        this.medicalConditions = medicalConditions;
+        this.criminalRecord = criminalRecord;
+        this.reasonForEntry = reasonForEntry;
+        this.lengthOfIntendedStay = lengthOfIntendedStay;
         this.accountUsername = accountUsername;
         this.accountPassword = accountPassword;
         // status is already set to Status.CREATED
@@ -119,11 +124,12 @@ public class Account {
         this.phoneNumber = phoneNumber;
         this.additionalInformation = additionalInformation;
 
+
     }
 
     // THIS IS RUN FROM DATA ENTRY CALLED AFTER ONSCREENVALIDATION RETURNS TRUE
     public static Account addAccount(String name, String email, LocalDate dateofBirth, int gender, String countryOfOrigin,
-            String medicalConditions, CriminalRecord criminalRecord, int reasonForEntry, int lengthOfIntendeStay,
+            String medicalConditions, CriminalRecord criminalRecord, int reasonForEntry, String lengthOfIntendStay,
             String accountUsername, String accountPassword,
             PhoneNumber phoneNumber, String additionalInformation) {
         
@@ -131,10 +137,14 @@ public class Account {
         // call constructor if idInSystem and alienNumber can be created (less than Long.MAX_VALUE)
         if (canAssignID && canAssignAlienNumber) {
             tmp = new Account(name, email, dateofBirth, gender, countryOfOrigin, medicalConditions, criminalRecord,
-                reasonForEntry, lengthOfIntendeStay, accountUsername, accountPassword, phoneNumber,
+                    reasonForEntry, lengthOfIntendStay, accountUsername, accountPassword, phoneNumber,
                 additionalInformation);
             saveAccountToDatabase(tmp);
+
+            Workflow w = Workflow.getWorkflow();
+            w.addItem(tmp.getIdInSystem());
         }
+
         return tmp;
     }
 

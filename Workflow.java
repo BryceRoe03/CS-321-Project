@@ -1,21 +1,23 @@
 public class Workflow {
-    private Workflow w = null;
+    private static Workflow w = new Workflow();
 
     private Workflow() {
-        // connect to Workflow DB
-        w = null;
     }
 
-    public boolean updateWorkflowStatus(Status updateStatus, int idInSystem) {
+    public static Workflow getWorkflow() {
+        return w;
+    }
+
+    public static boolean updateWorkflowStatus(Status updateStatus, int idInSystem) {
         return false;
     }
 
-    public boolean addItem(int idInSystem) {
+    public static boolean addItem(long idInSystem) {
         return false;
     }
 
-    public int getItem(Status workflowStatus) {
-        // idInSystem
+    public static int getItem(Status workflowStatus) {
+        // return idInSystem
         return 0;
     }
 }
