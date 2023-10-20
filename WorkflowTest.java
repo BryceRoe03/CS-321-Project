@@ -26,7 +26,7 @@ public class WorkflowTest {
     }
 
     @Test
-    public void getWorkflow() {
+    public void testGetWorkflow() {
         // Grab multiple workflows of different accounts
         // Account.addAccount(...);
         Workflow work = Worklow.getWorkflow();
