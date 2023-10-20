@@ -27,8 +27,18 @@ public class WorkflowTest {
 
     @Test
     public void getWorkflow() {
-        // Workflow should not be null
-        assertNotNull("Workflow is null.", w);
+        // Grab multiple workflows of different accounts
+        // Account.addAccount(...);
+        Workflow work = Worklow.getWorkflow();
+        assertNotNull("Workflow is null.", work);
+
+        // Account.addAccount(...);
+        Workflow work2 = Worklow.getWorkflow();
+        assertNotNull("Workflow is null.", work2);
+
+        // Account.addAccount(...);
+        Workflow work3 = Worklow.getWorkflow();
+        assertNotNull("Workflow is null.", work3);
     }
 
     @Test
@@ -38,6 +48,16 @@ public class WorkflowTest {
         // assertTrue("updateWorkflowStatus() worked.", ac.getAccount(0).getStatus() ==
         // Status.REVIEW);
         assertFalse("updateWorkflowStatus() worked.", ac.getAccount(0).getStatus() != Status.REVIEW);
+
+        assertFalse("updateWorkflowStatus() returned false", w.updateWorkflowStatus(Status.APPROVAL, 0));
+        // assertTrue("updateWorkflowStatus() worked.", ac.getAccount(0).getStatus() ==
+        // Status.REVIEW);
+        assertFalse("updateWorkflowStatus() worked.", ac.getAccount(0).getStatus() != Status.APPROVAL);
+
+        assertFalse("updateWorkflowStatus() returned false", w.updateWorkflowStatus(Status.DONE, 0));
+        // assertTrue("updateWorkflowStatus() worked.", ac.getAccount(0).getStatus() ==
+        // Status.REVIEW);
+        assertFalse("updateWorkflowStatus() worked.", ac.getAccount(0).getStatus() != Status.DONE);
     }
 
     @Test
@@ -46,6 +66,8 @@ public class WorkflowTest {
         assertFalse("addItem() returned true", w.addItem(-1));
         // New item is added
         assertTrue("addItem() returned false", w.addItem(0));
+
+        assertTrue("addItem() returned false", w.addItem(5248));
     }
 
     @Test
@@ -54,6 +76,8 @@ public class WorkflowTest {
         assertEquals(-1, w.getItem(-1));
         // Should not find it
         assertEquals(0, w.getItem(200));
+        // Should not find it
+        assertEquals(-1, w.getItem(-999));
     }
 
 }
