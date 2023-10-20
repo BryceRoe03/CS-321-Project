@@ -1,6 +1,7 @@
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.beans.Transient;
 import java.time.LocalDate;
 
 import org.junit.Before;
@@ -20,8 +21,14 @@ public class WorkflowTest {
         date = LocalDate.now();
         w = Workflow.getWorkflow();
         ac = Account.addAccount("Don Joe", "Don.Joe@gmail.com", date, 1, "Russia", "No Medical Conditions.",
-                cr, 0, 50, "JohnDoe", "Doe123", pn,
+                cr, 0, "50 days", "JohnDoe", "Doe123", pn,
                 "No Additional Information.");
+    }
+
+    @Test
+    public void getWorkflow() {
+        // Workflow should not be null
+        assertNotNull("Workflow is null.", w);
     }
 
     @Test
@@ -35,14 +42,18 @@ public class WorkflowTest {
 
     @Test
     public void testAddItem() {
-
-        // fail("Not Yet Implemented!");
+        // Item is already added
+        assertFalse("addItem() returned true", w.addItem(-1));
+        // New item is added
+        assertTrue("addItem() returned false", w.addItem(0));
     }
 
     @Test
     public void testGetItem() {
-        // Getters and setters I mean
-        // fail("Not Yet Implemented!");
+        // Should find it
+        assertEquals(-1, w.getItem(-1));
+        // Should not find it
+        assertEquals(0, w.getItem(200));
     }
 
 }
