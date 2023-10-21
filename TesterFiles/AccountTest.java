@@ -1,16 +1,23 @@
+
+// Imports
 import static org.junit.Assert.*;
-import java.beans.Transient;
 import org.junit.Before;
 import org.junit.Test;
 import java.time.LocalDate;
 
+/**
+ * Tester file for Account.java.
+ */
 public class AccountTest {
-
+    // Fields.
     Account ac = null;
     CriminalRecord cr = null;
     PhoneNumber pn = null;
     LocalDate date = null;
 
+    /**
+     * Initialize any objects needed.
+     */
     @Before
     public void setUp() {
         cr = new CriminalRecord();
@@ -21,6 +28,10 @@ public class AccountTest {
                 "No Additional Information.");
     }
 
+    /**
+     * Test to check if the account object was created successfully and if the
+     * getter methods are working.
+     */
     @Test
     public void testGetAccount() {
         // ac = Account.addAccount("Don Joe", "Don.Joe@gmail.com", date, 1, "Russia",
@@ -91,6 +102,11 @@ public class AccountTest {
         // fail("Not Yet Implemented!");
     }
 
+    /**
+     * Test to check if the dataReview method is able to run successfully (validate
+     * the account and save updates to the database) by checking the return value
+     * (which should be the id of the account in the system).
+     */
     @Test
     public void testDataReview() {
         // Account ac = new Account();
@@ -99,6 +115,12 @@ public class AccountTest {
         assertFalse("testDataReview(): idInSystem should be greater than 0.", Account.dataReview(0L) < 0);
         // fail("Not Yet Implemented!");
     }
+
+    /**
+     * Test to check if the dataApproval method is able to run successfully (approve
+     * the account and save updates to the database) by checking the return value
+     * (which should be the id of the account in the system).
+     */
     @Test
     public void testDataApproval() {
         // Account ac = new Account();
@@ -108,16 +130,22 @@ public class AccountTest {
         // fail("Not Yet Implemented!");
     }
 
-
+    /**
+     * Test to check if the account can be retrieved given the alienNumber.
+     */
     @Test
     public void testSearchAccount() {
         // filler number for now
         int alienNumber = 0;
         assertNotNull(Account.searchAccount(alienNumber));
-        assertFalse("searchAccount(): should return " + alienNumber, Account.searchAccount(0).getAlienNumber() != alienNumber);
+        assertFalse("searchAccount(): should return " + alienNumber,
+                Account.searchAccount(0).getAlienNumber() != alienNumber);
         // fail("Not Yet Implemented!");
     }
 
+    /**
+     * Test to check if the account's status can be retrieved.
+     */
     @Test
     public void testGetStatus() {
         // Create an account with a given status
