@@ -1,3 +1,4 @@
+
 // Imports
 import java.time.LocalDate;
 
@@ -349,7 +350,8 @@ public class Account {
     /**
      * Public method to search for a user's account.
      * 
-     * @param alienNumber - Long AlienNumber corresponding to the individual's account.
+     * @param alienNumber - Long AlienNumber corresponding to the individual's
+     *                    account.
      * @return Account - The individual's account.
      */
     public static Account searchAccount(long alienNumber) {
