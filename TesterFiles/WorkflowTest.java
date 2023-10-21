@@ -94,8 +94,4 @@ public class WorkflowTest {
         // Should not find it
         assertEquals(-1, Workflow.getItem(Status.DONE));
     }
-<<<<<<< HEAD:TesterFiles/WorkflowTest.java
-=======
-
->>>>>>> c1f8855a1a5612697f0130b31cd6b884db6bd39b:WorkflowTest.java
 }
