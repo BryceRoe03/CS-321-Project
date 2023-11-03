@@ -1,4 +1,3 @@
-
 // Imports
 import java.time.LocalDate;
 
@@ -356,5 +355,13 @@ public class Account {
      */
     public static Account searchAccount(long alienNumber) {
         return null;
+    }
+
+    /**
+     * toString for Account
+     */
+    @Override
+    public String toString() {
+        return "Name: " + name + ", Email: " + email + ", DateOfBirth: " + dateOfBirth + ", Gender: " + gender + ", CountryOfOrigin: " + countryOfOrigin + ", MedicalConditions: " + medicalConditions + ", CriminalRecord: " + criminalRecord + ", ReasonForEntry: " + reasonForEntry + ", LengthOfIntendedStay: " + lengthOfIntendedStay + ", AccountUsername: " + accountUsername + ", AccountPassword: " + accountPassword + ", alienNumber: " + alienNumber + ", idInSystem: " + idInSystem + ", Status" + status + ", PhoneNumber: " + phoneNumber + ", AdditionalInformation: " + additionalInformation;
     }
 }
