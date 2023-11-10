@@ -1,3 +1,4 @@
+package org.openjfx;
 /**
  * Workflow class object.
  */

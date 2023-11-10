@@ -1,3 +1,4 @@
+package org.openjfx;
 /**
  * Class to represent the individual's phone number.
  */

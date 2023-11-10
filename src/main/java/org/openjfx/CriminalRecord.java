@@ -1,3 +1,4 @@
+package org.openjfx;
 /**
  * Class to represent if the individual has a criminal record.
  */

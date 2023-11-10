@@ -1,3 +1,4 @@
+package org.openjfx;
 /**
  * Enum class representing Status' as an integer.
  */
