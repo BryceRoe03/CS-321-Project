@@ -1,4 +1,5 @@
 package org.openjfx;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -23,23 +24,35 @@ import javafx.scene.text.*;
  * JavaFX App
  */
 public class DataEntry extends Application {
+    /* Private variables */
     private GridPane gp = new GridPane(640, 480);
     private ArrayList accList = new ArrayList<Account>();
+    private Workflow w = Workflow.getWorkflow();
 
     // Used by home page
+    /**
+     * Method used by home screen to get the screen content.
+     * 
+     * @return gp GridPane - GridPane with screen content.
+     */
     public GridPane getGridPane() {
         return this.gp;
     }
 
     // // Get list of accounts if defined
     // public ArrayList<Account> getAccountsForTesting() {
-    //     return this.accList;
+    // return this.accList;
     // }
 
     // public void setAccountsForTesting(ArrayList<Account> accList) {
-    //     this.accList = accList;
+    // this.accList = accList;
     // }
 
+    /**
+     * Method to start the screen with the corresponding buttons, text, ect.
+     * 
+     * @param stage Stage - Window for the screen to be displayed.
+     */
     @Override
     public void start(Stage stage) {
         stage.setTitle("Data Entry Form");
@@ -47,31 +60,32 @@ public class DataEntry extends Application {
 
         // gp setup
         this.gp.setPadding(new Insets(5, 5, 5, 5));
-        this.gp.setVgap(5); 
+        this.gp.setVgap(5);
         this.gp.setHgap(10);
         this.gp.setAlignment(Pos.CENTER);
-        
-        /* Fields to add: String name, String email, LocalDate dateOfBirth, int gender, String countryOfOrigin,
-            String medicalConditions, CriminalRecord criminalRecord, int reasonForEntry, String lengthOfIntendedStay,
-            String accountUsername, String accountPassword,
-            PhoneNumber phoneNumber, String additionalInformation */
+
+        /*
+         * Fields to add: String name, String email, LocalDate dateOfBirth, int gender,
+         * String countryOfOrigin,
+         * String medicalConditions, CriminalRecord criminalRecord, int reasonForEntry,
+         * String lengthOfIntendedStay,
+         * String accountUsername, String accountPassword,
+         * PhoneNumber phoneNumber, String additionalInformation
+         */
 
         // Name
         Text nameLabel = new Text("Name");
         TextField nameField = new TextField();
         nameField.setPromptText("Enter Your Name...");
-        // Group nameGroup = new Group(namelabel, nameField); 
 
         // Email
         Text emailLabel = new Text("Email");
         TextField emailField = new TextField();
         emailField.setPromptText("Enter Your Email...");
-        // Group emailGroup = new Group(emaillabel, emailField); 
 
         // LocalDate
         Text dateLabel = new Text("Date");
         DatePicker dateField = new DatePicker();
-        // Group dateGroup = new Group(dateField); 
 
         // Gender
         Text genderLabel = new Text("Gender");
@@ -85,16 +99,18 @@ public class DataEntry extends Application {
         countryOfOriginField.setPromptText("Enter Your Country of Origin...");
 
         // Medical Conditions
-        Text medicalConditionsLabel = new Text("Medical Conditions \n(Use Commas ',' as a separator or\nleave empty if none))");
+        Text medicalConditionsLabel = new Text(
+                "Medical Conditions \n(Use Commas ',' as a separator or\nleave empty if none))");
         TextField medicalConditionsField = new TextField();
         medicalConditionsField.setPromptText("Enter Your Medical Condition(s)...");
 
-        // Criminal Record 
-        Text criminalRecordLabel = new Text("Criminal Record \n(Use Commas ',' as a separator or\nleave empty if none)");
+        // Criminal Record
+        Text criminalRecordLabel = new Text(
+                "Criminal Record \n(Use Commas ',' as a separator or\nleave empty if none)");
         TextField criminalRecordField = new TextField();
         criminalRecordField.setPromptText("Enter Your Criminal Record(s)...");
 
-        // Reason for Entry 
+        // Reason for Entry
         Text entryLabel = new Text("Reason For Entry");
         String entryOptions[] = { "Relocation", "Visiting", "Job Opportunity", "Other" };
         // Create a combo box
@@ -113,7 +129,7 @@ public class DataEntry extends Application {
         // accountPassword
         Text passwordLabel = new Text("Password");
         TextField passwordField = new TextField();
-        passwordField.setPromptText("Enter Your Password...");        
+        passwordField.setPromptText("Enter Your Password...");
 
         // Phone Number
         Text pnInternationalLabel = new Text("International Code For Your Phone Number");
@@ -133,21 +149,21 @@ public class DataEntry extends Application {
         // Submit Button
         Button submit = new Button("Submit");
         // Mark as done
-        ButtonBar.setButtonData(submit, ButtonData.FINISH);
+        ButtonBar.setButtonData(submit, ButtonData.NO);
         // Clear Button
         Button clear = new Button("Clear");
         // Mark as Clear (BACK_PREVIOUS)
-        ButtonBar.setButtonData(clear, ButtonData.BACK_PREVIOUS);
+        ButtonBar.setButtonData(clear, ButtonData.NO);
 
         // Event that Saves Info in Form
-        submit.setOnAction( e -> {
+        submit.setOnAction(e -> {
             // make gender
             int genderElement = 0;
             int i = 0;
             for (String gender : genderOptions) {
                 if (gender.equals(genderOptions[i])) {
-                   genderElement = i;
-                   break; 
+                    genderElement = i;
+                    break;
                 }
                 i++;
             }
@@ -157,9 +173,9 @@ public class DataEntry extends Application {
             CriminalRecord crimRecord;
             if (criminalRecordField.getText().equals("")) {
                 crimRecord = new CriminalRecord();
-            } 
-            else {
-                ArrayList<String> elements = new ArrayList<>(Arrays.asList(criminalRecordField.getText().split(",[ ]*")));
+            } else {
+                ArrayList<String> elements = new ArrayList<>(
+                        Arrays.asList(criminalRecordField.getText().split(",[ ]*")));
                 String[] violations = elements.toArray(new String[elements.size()]);
                 crimRecord = new CriminalRecord(true, violations);
             }
@@ -168,8 +184,8 @@ public class DataEntry extends Application {
             int entryElement = 0;
             for (String gender : entryOptions) {
                 if (gender.equals(entryOptions[i])) {
-                   entryElement = i;
-                   break; 
+                    entryElement = i;
+                    break;
                 }
                 i++;
             }
@@ -179,16 +195,37 @@ public class DataEntry extends Application {
             Integer international = Integer.parseInt(pnInternationalField.getText());
             Long pn = Long.parseLong(pnField.getText());
             PhoneNumber combinedpn = new PhoneNumber(international, pn);
-        
-            accList.add(Account.addAccount(nameField.getText(), emailField.getText(), dateField.getValue(), genderElement, countryOfOriginField.getText(), medicalConditionsField.getText(), crimRecord, entryElement, stayField.getText(), usernameField.getText(), passwordField.getText(), combinedpn, addInfoField.getText()));
-            System.out.println("Accounts:");
-            for (int a = 0; a < accList.size(); a++) {
-                System.out.println(accList.get(a).toString());
+
+            // call error checking on the info before trying to create an account : onscreenvalidate
+            Account accountToAdd = Account.addAccount(nameField.getText(), emailField.getText(), dateField.getValue(),
+                    genderElement, countryOfOriginField.getText(), medicalConditionsField.getText(), crimRecord,
+                    entryElement, stayField.getText(), usernameField.getText(), passwordField.getText(), combinedpn,
+                    addInfoField.getText());
+            // On successful add
+            if (Account.saveAccountToDatabase(accountToAdd)) {
+                // Add account to workflow called in Account.java
+                // Set button data
+                ButtonBar.setButtonData(submit, ButtonData.YES);
+                ButtonBar.setButtonData(clear, ButtonData.NO);
+                // List all accounts in system
+                System.out.println("Accounts:");
+                for (int a = 0; a < accList.size(); a++) {
+                    System.out.println(accList.get(a).toString());
+                }
+                System.out.println();
+            } else { // On failed add
+                // Set button data
+                ButtonBar.setButtonData(submit, ButtonData.NO);
+                ButtonBar.setButtonData(clear, ButtonData.NO);
+                System.out.println("Add failed.");
             }
-            System.out.println();
+
         });
 
-        clear.setOnAction( e -> { 
+        // On clear button press
+        clear.setOnAction(e -> {
+            ButtonBar.setButtonData(clear, ButtonData.YES);
+            ButtonBar.setButtonData(submit, ButtonData.NO);
             nameField.setText("");
             emailField.setText("");
             dateField.setValue(null);
@@ -204,16 +241,16 @@ public class DataEntry extends Application {
             pnField.setText("");
             addInfoField.setText("");
         });
-  
+
         // Add button to the ButtonBar
         buttonBar.getButtons().addAll(submit, clear);
 
-        // Add elements to gp 
-        this.gp.add(nameLabel, 0, 0); 
-        this.gp.add(nameField, 1, 0); 
-        this.gp.add(emailLabel, 0, 1);       
-        this.gp.add(emailField, 1, 1); 
-        this.gp.add(dateLabel, 0, 2); 
+        // Add elements to gp
+        this.gp.add(nameLabel, 0, 0);
+        this.gp.add(nameField, 1, 0);
+        this.gp.add(emailLabel, 0, 1);
+        this.gp.add(emailField, 1, 1);
+        this.gp.add(dateLabel, 0, 2);
         this.gp.add(dateField, 1, 2);
         this.gp.add(genderLabel, 0, 3);
         this.gp.add(genderField, 1, 3);
@@ -239,14 +276,16 @@ public class DataEntry extends Application {
         this.gp.add(addInfoField, 1, 13);
         this.gp.add(buttonBar, 0, 14);
 
+        /*
+         * Removed because of home screen
+         */
         // Create Scene
-        // var scene = new Scene(this.gp);
-        // stage.setScene(scene);
-        // stage.show();
+        var scene = new Scene(this.gp);
+        stage.setScene(scene);
+        stage.show();
     }
 
-    // public static void main(String[] args) {
-    //     launch();
-    // }
-
+    public static void main(String[] args) {
+        launch();
+    }
 }

@@ -2,6 +2,7 @@ package org.openjfx;
 
 // Imports
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 /**
  * Account Business Object.
@@ -12,7 +13,7 @@ public class Account {
     private static long nextIdInSystem = 0;
     private static long nextAlienNumber = 0;
     // workflow object
-    private static Workflow w;
+    private static Workflow w = Workflow.getWorkflow();
     // fields for account object
     private String name = "";
     private String email = "";
@@ -30,6 +31,7 @@ public class Account {
     private Status status = Status.CREATED;
     private PhoneNumber phoneNumber = null;
     private String additionalInformation = "";
+    private static ArrayList<Account> accList = new ArrayList<Account>();
 
     /* Getters */
     /**
@@ -176,6 +178,15 @@ public class Account {
         return this.additionalInformation;
     }
 
+    /**
+     * Getter method for account list.
+     * 
+     * @return ArrayList<Account> - Account list.
+     */
+    public static ArrayList<Account> getAccountList() {
+        return accList;
+    }
+
     /* Setters */
     /**
      * Setter method to set the status.
@@ -272,7 +283,8 @@ public class Account {
             tmp = new Account(name, email, dateofBirth, gender, countryOfOrigin, medicalConditions, criminalRecord,
                     reasonForEntry, lengthOfIntendStay, accountUsername, accountPassword, phoneNumber,
                     additionalInformation);
-            saveAccountToDatabase(tmp);
+            // saveAccountToDatabase(tmp) called in DataEntry Class
+            // Aad account to workflow
             Workflow.addItem(tmp.getIdInSystem());
         }
         return tmp;
@@ -285,7 +297,12 @@ public class Account {
      * @param idInSystem - Long corresponding to the id for the account.
      * @return Account - Individual's account.
      */
-    public Account getAccount(long idInSystem) {
+    public static Account getAccount(long idInSystem) {
+        for (Account i : accList) {
+            if (i.getIdInSystem() == idInSystem) {
+                return i;
+            }
+        }
         return null;
     }
 
@@ -307,7 +324,7 @@ public class Account {
      * @return Boolean - Whether the save was successful or not.
      */
     private static Boolean saveAccountToDatabase(Account account) {
-        return false;
+        return accList.add(account);
     }
 
     // FOR DATA REVIEW
@@ -356,6 +373,11 @@ public class Account {
      * @return Account - The individual's account.
      */
     public static Account searchAccount(long alienNumber) {
+        for (Account i : accList) {
+            if (i.getAlienNumber() == alienNumber) {
+                return i;
+            }
+        }
         return null;
     }
 
@@ -364,6 +386,22 @@ public class Account {
      */
     @Override
     public String toString() {
-        return "Name: " + name + ", Email: " + email + ", DateOfBirth: " + dateOfBirth + ", Gender: " + gender + ", CountryOfOrigin: " + countryOfOrigin + ", MedicalConditions: " + medicalConditions + ", CriminalRecord: " + criminalRecord + ", ReasonForEntry: " + reasonForEntry + ", LengthOfIntendedStay: " + lengthOfIntendedStay + ", AccountUsername: " + accountUsername + ", AccountPassword: " + accountPassword + ", alienNumber: " + alienNumber + ", idInSystem: " + idInSystem + ", Status" + status + ", PhoneNumber: " + phoneNumber + ", AdditionalInformation: " + additionalInformation;
+        return "Name: " + name + ", Email: " + email + ", DateOfBirth: " + dateOfBirth + ", Gender: " + gender
+                + ", CountryOfOrigin: " + countryOfOrigin + ", MedicalConditions: " + medicalConditions
+                + ", CriminalRecord: " + criminalRecord + ", ReasonForEntry: " + reasonForEntry
+                + ", LengthOfIntendedStay: " + lengthOfIntendedStay + ", AccountUsername: " + accountUsername
+                + ", AccountPassword: " + accountPassword + ", alienNumber: " + alienNumber + ", idInSystem: "
+                + idInSystem + ", Status" + status + ", PhoneNumber: " + phoneNumber + ", AdditionalInformation: "
+                + additionalInformation;
+    }
+
+    /**
+     * Public method for testing purposes to populate Account ArrayList.
+     * 
+     * @return Boolean - True/False if the list was populated.
+     */
+    public static boolean testPopulateList() {
+        return accList.add(new Account("Terry Crews", "t.crews@gmail.com", LocalDate.of(1968, 7, 30), 0, "Brazil", "",
+                new CriminalRecord(), 0, "12 years", "terry", "crews123", new PhoneNumber(1, (long) 123456789), ""));
     }
 }
