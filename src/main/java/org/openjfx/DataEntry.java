@@ -202,7 +202,7 @@ public class DataEntry extends Application {
                     entryElement, stayField.getText(), usernameField.getText(), passwordField.getText(), combinedpn,
                     addInfoField.getText());
             // On successful add
-            if (Account.saveAccountToDatabase(accountToAdd)) {
+            if (accountToAdd != null) {
                 // Add account to workflow called in Account.java
                 // Set button data
                 ButtonBar.setButtonData(submit, ButtonData.YES);
@@ -280,12 +280,12 @@ public class DataEntry extends Application {
          * Removed because of home screen
          */
         // Create Scene
-        var scene = new Scene(this.gp);
-        stage.setScene(scene);
-        stage.show();
+        // var scene = new Scene(this.gp);
+        // stage.setScene(scene);
+        // stage.show();
     }
 
-    public static void main(String[] args) {
-        launch();
-    }
+    // public static void main(String[] args) {
+        // launch();
+    // }
 }

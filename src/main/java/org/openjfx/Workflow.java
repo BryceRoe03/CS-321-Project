@@ -104,7 +104,6 @@ public class Workflow {
                 q.add(tmp);
                 return tmp;
             }
-            prev = tmp;
         }
         /*
          * If node is not found or queue is null, return null. If node is found, update

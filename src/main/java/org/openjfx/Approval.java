@@ -27,11 +27,8 @@ public class Approval extends Application {
     @Override
     public void start(Stage stage) {
 
-        ArrayList<Account> acc = new ArrayList<>();
-
-        acc.add(Account.addAccount("Feddy Faber", "urmom@gmail.com", LocalDate.now(), 0, "USA", "None", new CriminalRecord(), 0, "None", "None", "None", new PhoneNumber(1, 123456789), "None"));
-
-
+        Account freddy = Account.addAccount("Feddy Faber", "urmom@gmail.com", LocalDate.now(), 0, "USA", "None", new CriminalRecord(), 0, "None", "None", "None", new PhoneNumber(1, 123456789), "None");
+        ArrayList<Account> acc = Account.getAccountList();
 
         // Setting column and row gap
         this.grid.setHgap(10);
@@ -43,13 +40,13 @@ public class Approval extends Application {
 
         // Name
         Text nameLabel = new Text("Name: ");
-        Text accName = new Text(acc.get(0).getName());
+        Text accName = new Text(acc.get(1).getName());
         this.grid.add(nameLabel, 0, 0);
         this.grid.add(accName, 1, 0);
 
         // Email
         Text emailLabel = new Text("Email: ");
-        Text accEmail = new Text(acc.get(0).getEmail());
+        Text accEmail = new Text(acc.get(1).getEmail());
         this.grid.add(emailLabel, 0, 1);
         this.grid.add(accEmail, 1, 1);
 
@@ -121,7 +118,7 @@ public class Approval extends Application {
 
         // Status
         Text statusLabel = new Text("Current Status: ");
-        Text accStatus = new Text(acc.get(0).getStatus().toString());
+        Text accStatus = new Text(acc.get(1).getStatus().toString());
         this.grid.add(statusLabel, 0, 13);
         this.grid.add(accStatus, 1, 13);
 
@@ -141,13 +138,13 @@ public class Approval extends Application {
         stage.setTitle("Account Approval Form");
         Button btnApprove = new Button("Approve");
         btnApprove.setOnAction( e -> { 
-            acc.get(0).setStatus(Status.DONE);
-            accStatus.setText(acc.get(0).getStatus().toString());
+            acc.get(1).setStatus(Status.DONE);
+            accStatus.setText(acc.get(1).getStatus().toString());
         });
         Button btnReject = new Button("Reject");
         btnReject.setOnAction( e -> { 
-            acc.get(0).setStatus(Status.FAIL);
-            accStatus.setText(acc.get(0).getStatus().toString());
+            acc.get(1).setStatus(Status.FAIL);
+            accStatus.setText(acc.get(1).getStatus().toString());
         });
         ButtonBar bar = new ButtonBar();
         bar.getButtons().addAll(btnApprove, btnReject);

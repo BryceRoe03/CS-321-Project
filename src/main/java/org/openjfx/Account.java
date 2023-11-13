@@ -13,6 +13,7 @@ public class Account {
     private static long nextIdInSystem = 0;
     private static long nextAlienNumber = 0;
     // workflow object
+    private static ArrayList<Account> accList = new ArrayList<Account>();
     private static Workflow w = Workflow.getWorkflow();
     // fields for account object
     private String name = "";
@@ -31,7 +32,6 @@ public class Account {
     private Status status = Status.CREATED;
     private PhoneNumber phoneNumber = null;
     private String additionalInformation = "";
-    private static ArrayList<Account> accList = new ArrayList<Account>();
 
     /* Getters */
     /**
@@ -283,8 +283,9 @@ public class Account {
             tmp = new Account(name, email, dateofBirth, gender, countryOfOrigin, medicalConditions, criminalRecord,
                     reasonForEntry, lengthOfIntendStay, accountUsername, accountPassword, phoneNumber,
                     additionalInformation);
-            // saveAccountToDatabase(tmp) called in DataEntry Class
-            // Aad account to workflow
+            // Add account to account list (database)
+            saveAccountToDatabase(tmp);
+            // Add account to workflow
             Workflow.addItem(tmp.getIdInSystem());
         }
         return tmp;
