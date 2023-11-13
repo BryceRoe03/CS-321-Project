@@ -31,7 +31,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.3</version>
                 <configuration>
-                    <mainClass>org.openjfx.DataEntry</mainClass>
+                    <mainClass>org.openjfx.Home</mainClass>
                 </configuration>
             </plugin>
         </plugins>
