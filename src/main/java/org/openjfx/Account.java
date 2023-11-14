@@ -402,7 +402,19 @@ public class Account {
      * @return Boolean - True/False if the list was populated.
      */
     public static boolean testPopulateList() {
-        return accList.add(new Account("Terry Crews", "t.crews@gmail.com", LocalDate.of(1968, 7, 30), 0, "Brazil", "",
+        boolean accounts = true;
+
+        CriminalRecord testCriminalRecord = new CriminalRecord();
+        testCriminalRecord.hasRecord = true;
+        testCriminalRecord.violations = new String[] { "Arson", "Vandalism" };
+        accounts = accounts && accList.add(new Account("Crew Terrys", "c.terrys@gmail.com", LocalDate.of(1973, 3, 20),
+                0,
+                "Germany", "Broken Legs",
+                testCriminalRecord, 3, "12 days", "crews", "terrys123", new PhoneNumber(1, (long) 4834683211), ""));
+
+        accounts = accounts && accList.add(new Account("Terry Crews", "t.crews@gmail.com", LocalDate.of(1968, 7, 30), 0,
+                "Brazil", "",
                 new CriminalRecord(), 0, "12 years", "terry", "crews123", new PhoneNumber(1, (long) 123456789), ""));
+        return accounts;
     }
 }
