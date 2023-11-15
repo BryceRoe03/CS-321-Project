@@ -29,6 +29,49 @@ public class DataEntry extends Application {
     private ArrayList accList = new ArrayList<Account>();
     private Workflow w = Workflow.getWorkflow();
 
+    /**
+     * Private method to run initial validility checks on the data entered in the
+     * Data Entry form.
+     * 
+     * @return Integer - Bits determine which info was valid.
+     */
+    private static int screenInfoValidate(String name, String email, LocalDate d, String uname, String pass, PhoneNumber pn) {
+        Integer allAreTrue = 0x0;
+
+        // Full name test
+        if (!name.contains(" ")) {
+            allAreTrue |= 0x1;
+        }
+        
+        // Email test
+        if (!email.contains("@")) {
+            allAreTrue |= 0x10;
+        }
+
+        // Date test (can't be greater than 100)
+        if (LocalDate.now().getYear() - d.getYear() > 100) {
+            allAreTrue |= 0x100;
+        }
+
+        // Is username taken already?
+        for (Account i : Account.getAccountList()) {
+            if (i.getAccountUsername().equals(uname)) {
+                allAreTrue |= 0x1000;
+            }
+        }
+
+        // Is password longer than 8 characters?
+        if (pass.length() < 8) {
+            allAreTrue |= 0x10000;
+        }
+
+        // Is phone number greater than 10 characters
+        if (pn.number < 1000000000L) {
+            allAreTrue |= 0x100000;
+        }
+        return allAreTrue;
+    }
+
     // Used by home page
     /**
      * Method used by home screen to get the screen content.
@@ -74,9 +117,9 @@ public class DataEntry extends Application {
          */
 
         // Name
-        Text nameLabel = new Text("Name");
+        Text nameLabel = new Text("Full Name");
         TextField nameField = new TextField();
-        nameField.setPromptText("Enter Your Name...");
+        nameField.setPromptText("Enter Your Full Name...");
 
         // Email
         Text emailLabel = new Text("Email");
@@ -196,7 +239,8 @@ public class DataEntry extends Application {
             Long pn = Long.parseLong(pnField.getText());
             PhoneNumber combinedpn = new PhoneNumber(international, pn);
 
-            // call error checking on the info before trying to create an account : onscreenvalidate
+            // call error checking on the info before trying to create an account :
+            // onscreenvalidate
             Account accountToAdd = Account.addAccount(nameField.getText(), emailField.getText(), dateField.getValue(),
                     genderElement, countryOfOriginField.getText(), medicalConditionsField.getText(), crimRecord,
                     entryElement, stayField.getText(), usernameField.getText(), passwordField.getText(), combinedpn,
@@ -286,6 +330,6 @@ public class DataEntry extends Application {
     }
 
     // public static void main(String[] args) {
-        // launch();
+    // launch();
     // }
 }
