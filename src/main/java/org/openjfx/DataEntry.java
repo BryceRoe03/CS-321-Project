@@ -15,6 +15,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.collections.FXCollections;
 import javafx.scene.control.ButtonBar.*;
+import javafx.scene.control.Alert.AlertType;
 // import javafx.event.ActionEvent;
 // import javafx.event.EventHandler;
 import javafx.scene.control.*;
@@ -31,43 +32,48 @@ public class DataEntry extends Application {
 
     /**
      * Private method to run initial validility checks on the data entered in the
-     * Data Entry form.
+     * Data Entry form. If the bit is a 1, then the parameters location in the bit
+     * is flagged. bit 1: name, bit 2: email, bit 3: LocalDate, bit 4: username,
+     * bit 5: password, bit 6: PhoneNumber.
      * 
      * @return Integer - Bits determine which info was valid.
      */
-    private static int screenInfoValidate(String name, String email, LocalDate d, String uname, String pass, PhoneNumber pn) {
+    private static int screenInfoValidate(String name, String email, LocalDate d, String uname, String pass,
+            PhoneNumber pn) {
         Integer allAreTrue = 0x0;
 
         // Full name test
         if (!name.contains(" ")) {
             allAreTrue |= 0x1;
         }
-        
+
         // Email test
         if (!email.contains("@")) {
-            allAreTrue |= 0x10;
+            allAreTrue |= (0x1 << 1);
         }
 
         // Date test (can't be greater than 100)
         if (LocalDate.now().getYear() - d.getYear() > 100) {
-            allAreTrue |= 0x100;
+            allAreTrue |= (0x1 << 2);
+        } else if (d.isAfter(LocalDate.now())) { // can't be date in the future
+            allAreTrue |= (0x1 << 2);
         }
 
         // Is username taken already?
         for (Account i : Account.getAccountList()) {
             if (i.getAccountUsername().equals(uname)) {
-                allAreTrue |= 0x1000;
+                allAreTrue |= (0x1 << 3);
             }
         }
 
-        // Is password longer than 8 characters?
-        if (pass.length() < 8) {
-            allAreTrue |= 0x10000;
+        // Is password longer than 7 characters?
+        if (pass.length() <= 7) {
+            allAreTrue |= (0x1 << 4);
         }
 
         // Is phone number greater than 10 characters
         if (pn.number < 1000000000L) {
-            allAreTrue |= 0x100000;
+            allAreTrue |= (0x1 << 5);
         }
         return allAreTrue;
     }
@@ -191,11 +197,11 @@ public class DataEntry extends Application {
         ButtonBar buttonBar = new ButtonBar();
         // Submit Button
         Button submit = new Button("Submit");
-        // Mark as done
+        // Button Data
         ButtonBar.setButtonData(submit, ButtonData.NO);
         // Clear Button
         Button clear = new Button("Clear");
-        // Mark as Clear (BACK_PREVIOUS)
+        // Button Data
         ButtonBar.setButtonData(clear, ButtonData.NO);
 
         // Event that Saves Info in Form
@@ -239,15 +245,60 @@ public class DataEntry extends Application {
             Long pn = Long.parseLong(pnField.getText());
             PhoneNumber combinedpn = new PhoneNumber(international, pn);
 
-            // call error checking on the info before trying to create an account :
-            // onscreenvalidate
-            Account accountToAdd = Account.addAccount(nameField.getText(), emailField.getText(), dateField.getValue(),
-                    genderElement, countryOfOriginField.getText(), medicalConditionsField.getText(), crimRecord,
-                    entryElement, stayField.getText(), usernameField.getText(), passwordField.getText(), combinedpn,
-                    addInfoField.getText());
-            // On successful add
+            // call error checking on the info before trying to create an account
+            int screenValidateResult = screenInfoValidate(nameField.getText(), emailField.getText(),
+                    dateField.getValue(), usernameField.getText(), passwordField.getText(), combinedpn);
+            System.out.println("screeninfovalidate value: " + screenValidateResult);
+            Account accountToAdd = null;
+            /* If there are errors with the fields, find them and display them as an error
+            on the screen */
+            if (screenValidateResult != 0) {
+                String errors = "Fields with errors:";
+                for (i = 0; i < 6; i++) {
+                    // if bit is equal to 1
+                    if (((screenValidateResult >> i) & 0x1) == 1) {
+                        switch (i) {
+                            case 0:
+                                System.out.println("error 1");
+                                errors += "\n-Full Name needs to be at least two words (First and Last name.)";
+                                break;
+                            case 1:
+                                System.out.println("error 2");
+                                errors += "\n-Email needs to be valid include \"@\".";
+                                break;
+                            case 2:
+                                System.out.println("error 3");
+                                errors += "\n-Date of Birth cannot be older than 100 or be a date in the future.";
+                                break;
+                            case 3:
+                                System.out.println("error 4");
+                                errors += "\n-Username is already taken.";
+                                break;
+                            case 4:
+                                System.out.println("error 5");
+                                errors += "\n-Password needs to be longer than 7 characters.";
+                                break;
+                            case 5:
+                                System.out.println("error 6");
+                                errors += "\n-Phone Number needs to be longer then 10 numbers.";
+                                break;
+                        }
+                    }
+                }
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setContentText(errors);
+                alert.show();
+            } else {
+                // Create account if screenValidateReuslt = 0
+                accountToAdd = Account.addAccount(nameField.getText(), emailField.getText(),
+                        dateField.getValue(),
+                        genderElement, countryOfOriginField.getText(), medicalConditionsField.getText(), crimRecord,
+                        entryElement, stayField.getText(), usernameField.getText(), passwordField.getText(), combinedpn,
+                        addInfoField.getText());
+            }
+            // On successful add/account creation
             if (accountToAdd != null) {
-                // Add account to workflow called in Account.java
+                // Account added to workflow in Account.java
                 // Set button data
                 ButtonBar.setButtonData(submit, ButtonData.YES);
                 ButtonBar.setButtonData(clear, ButtonData.NO);
@@ -263,7 +314,6 @@ public class DataEntry extends Application {
                 ButtonBar.setButtonData(clear, ButtonData.NO);
                 System.out.println("Add failed.");
             }
-
         });
 
         // On clear button press
