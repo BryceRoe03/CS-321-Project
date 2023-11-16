@@ -32,6 +32,7 @@ public class Approval extends Application {
         // "None", new PhoneNumber(1, 123456789), "None");
         // ArrayList<Account> acc = Account.getAccountList();
         Workflow w = Workflow.getWorkflow();
+
         Workflow.updateWorkflowStatus(Status.APPROVAL, 0);
         Workflow.updateWorkflowStatus(Status.APPROVAL, 1);
         long acc = w.getItemWithStatus(Status.APPROVAL);
@@ -101,13 +102,14 @@ public class Approval extends Application {
         Text accEntry = new Text();
         if (accView.getReasonForEntry() == 0) {
             accEntry.setText("Relocation");
-        } else if (accView.getGender() == 1) {
+        } else if (accView.getReasonForEntry() == 1) {
             accEntry.setText("Visiting");
-        } else if (accView.getGender() == 2) {
+        } else if (accView.getReasonForEntry() == 2) {
             accEntry.setText("Job Opportunity");
-        } else if (accView.getGender() == 3) {
+        } else if (accView.getReasonForEntry() == 3) {
             accEntry.setText("Other");
         }
+
         this.grid.add(reasonLabel, 0, 7);
         this.grid.add(accEntry, 1, 7);
 
@@ -176,8 +178,8 @@ public class Approval extends Application {
         btnApprove.setOnAction(
                 // Make this update the workflow status
                 e -> {
-                    if (w.updateWorkflowStatus(Status.DONE, acc)) {
-                        // accStatus.setText(Status.DONE.toString());
+                    if (Workflow.updateWorkflowStatus(Status.DONE, acc)) {
+                        accStatus.setText("Done");
                     }
         });
 
@@ -186,8 +188,8 @@ public class Approval extends Application {
         btnReject.setOnAction(
                 // Make this update the workflow status
                 e -> {
-                    if (w.updateWorkflowStatus(Status.FAIL, acc)) {
-                        // accStatus.setText(accView.getStatus().toString());
+                    if (Workflow.updateWorkflowStatus(Status.FAIL, acc)) {
+                        accStatus.setText("Fail");
                     }
                 });
 
@@ -219,14 +221,19 @@ public class Approval extends Application {
         btnNext.setOnAction(
                 // Make this update the workflow status
                 e -> {
-                    long AcID = w.getItemWithStatus(Status.APPROVAL);
+                    Workflow newW = Workflow.getWorkflow();
+
+                    Workflow.updateWorkflowStatus(Status.APPROVAL, 1);
+                    long AcID = newW.getItemWithStatus(Status.APPROVAL);
                     Account accCurrent = null;
                     Account.testPopulateList();
                     accCurrent = Account.getAccount(AcID);
 
                     accName.setText(accCurrent.getName());
                     accEmail.setText(accCurrent.getEmail());
-                    accDOB.setText(accCurrent.getDOB().toString());
+
+                    LocalDate birth = accCurrent.getDOB();
+                    accDOB.setText("" + birth.getMonth() + "/" + birth.getDayOfMonth() + "/" + birth.getYear());
                     if (accCurrent.getGender() == 0) {
                         accGender.setText("Male");
                     } else if (accCurrent.getGender() == 1) {
@@ -234,18 +241,19 @@ public class Approval extends Application {
                     } else if (accCurrent.getGender() == 2) {
                         accGender.setText("Other");
                     }
-                    accCNT.setText(accCurrent.getLengthOfIntendedStay());
+                    accCNT.setText(accCurrent.getCountryOfOrigin());
+                    accDuration.setText(accCurrent.getLengthOfIntendedStay());
                     accUN.setText(accCurrent.getAccountUsername());
                     accPW.setText(accCurrent.getAccountPassword());
                     accAlien.setText(Long.toString(accCurrent.getAlienNumber()));
                     accID.setText(Long.toString(accCurrent.getIdInSystem()));
                     if (accCurrent.getReasonForEntry() == 0) {
                         accEntry.setText("Relocation");
-                    } else if (accCurrent.getGender() == 1) {
+                    } else if (accCurrent.getReasonForEntry() == 1) {
                         accEntry.setText("Visiting");
-                    } else if (accCurrent.getGender() == 2) {
+                    } else if (accCurrent.getReasonForEntry() == 2) {
                         accEntry.setText("Job Opportunity");
-                    } else if (accCurrent.getGender() == 3) {
+                    } else if (accCurrent.getReasonForEntry() == 3) {
                         accEntry.setText("Other");
                     }
                     if (accCurrent.getStatus().getStatus() == 3) {
@@ -259,6 +267,8 @@ public class Approval extends Application {
                     }
                     accPnum.setText(accCurrent.getPhoneNumber().toString());
                     accEX.setText(accCurrent.getAdditionalInformation().toString());
+                    accMD.setText(accCurrent.getMedicalConditions());
+                    accCR.setText(accCurrent.getCriminalRecord().toString());
                 });
 
         // Assemble the button bar

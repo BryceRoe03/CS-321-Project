@@ -37,7 +37,14 @@ public class CriminalRecord {
     @Override
     public String toString() {
         if (hasRecord) {
-            return "Has " + violations.length + " violations:\nCommited the following: " + violations.toString();
+            String spit = "Has " + violations.length + " violations:\nCommited the following: ";
+            for (int i = 0; i < violations.length-1; i++) {
+                spit += violations[i] + ", ";
+                if (i == violations.length-2) {
+                    spit += violations[i+1];
+                }
+            }
+            return spit;
         }
         return "No Criminal Record.";
     }
