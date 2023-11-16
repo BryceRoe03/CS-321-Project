@@ -72,7 +72,7 @@ public class DataEntry extends Application {
         }
 
         // Is phone number greater than 10 characters
-        if (pn.number < 1000000000L) {
+        if (("" + pn).length() != 10) {
             allAreTrue |= (0x1 << 5);
         }
         return allAreTrue;
@@ -280,7 +280,7 @@ public class DataEntry extends Application {
                                 break;
                             case 5:
                                 System.out.println("error 6");
-                                errors += "\n-Phone Number needs to be longer then 10 numbers.";
+                                errors += "\n-Phone Number needs to be equal to 10 numbers.";
                                 break;
                         }
                     }
@@ -295,6 +295,9 @@ public class DataEntry extends Application {
                         genderElement, countryOfOriginField.getText(), medicalConditionsField.getText(), crimRecord,
                         entryElement, stayField.getText(), usernameField.getText(), passwordField.getText(), combinedpn,
                         addInfoField.getText());
+                Alert alert = new Alert(AlertType.NONE);
+                alert.setContentText("Your account has been sent for review.");
+                alert.show();
             }
             // On successful add/account creation
             if (accountToAdd != null) {
