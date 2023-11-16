@@ -239,10 +239,17 @@ public class DataEntry extends Application {
                 i++;
             }
             i = 0;
-
-            // make Phone Number
-            Integer international = Integer.parseInt(pnInternationalField.getText());
-            Long pn = Long.parseLong(pnField.getText());
+            Integer international = null;
+            Long pn = null;
+            try {
+                // make Phone Number
+                international = Integer.parseInt(pnInternationalField.getText());
+                pn = Long.parseLong(pnField.getText());
+            } catch (Exception e2) {
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setContentText("Error in form...\n-Verify input types entered\n-Required Information is filled");
+                alert.show();
+            }
             PhoneNumber combinedpn = new PhoneNumber(international, pn);
 
             // call error checking on the info before trying to create an account
@@ -250,8 +257,10 @@ public class DataEntry extends Application {
                     dateField.getValue(), usernameField.getText(), passwordField.getText(), combinedpn);
             System.out.println("screeninfovalidate value: " + screenValidateResult);
             Account accountToAdd = null;
-            /* If there are errors with the fields, find them and display them as an error
-            on the screen */
+            /*
+             * If there are errors with the fields, find them and display them as an error
+             * on the screen
+             */
             if (screenValidateResult != 0) {
                 String errors = "Fields with errors:";
                 for (i = 0; i < 6; i++) {
@@ -316,6 +325,8 @@ public class DataEntry extends Application {
                 ButtonBar.setButtonData(submit, ButtonData.NO);
                 ButtonBar.setButtonData(clear, ButtonData.NO);
                 System.out.println("Add failed.");
+                // if (screenValidateResult != 0) {
+                // }
             }
         });
 
