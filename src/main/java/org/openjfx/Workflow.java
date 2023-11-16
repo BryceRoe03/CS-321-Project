@@ -10,8 +10,8 @@ import java.util.Queue;
  */
 public class Workflow {
     // Private workflow object.
-    private static Workflow w = new Workflow();
     private static LinkedList<Long> q = new LinkedList<Long>();
+    private static Workflow w = new Workflow();
 
     /**
      * Default private constructor for the Workflow object.

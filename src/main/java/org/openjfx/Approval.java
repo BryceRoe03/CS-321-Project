@@ -79,60 +79,60 @@ public class Approval extends Application {
 
         // Country of Origin
         Text countryLabel = new Text("Country of Origin: ");
-        Text accCount = new Text(accView.getCountryOfOrigin());
+        Text accCNT = new Text(accView.getCountryOfOrigin());
         this.grid.add(countryLabel, 0, 4);
-        this.grid.add(accCount, 1, 4);
+        this.grid.add(accCNT, 1, 4);
 
         // Medical History
         Text medicalLabel = new Text("Medical History: ");
-        Text accMed = new Text(accView.getMedicalConditions());
+        Text accMD = new Text(accView.getMedicalConditions());
         this.grid.add(medicalLabel, 0, 5);
-        this.grid.add(accMed, 1, 5);
+        this.grid.add(accMD, 1, 5);
 
         // Criminal Record
         Text crimLabel = new Text("Criminal Record: ");
-        Text accCrim = new Text(accView.getCriminalRecord().toString());
+        Text accCR = new Text(accView.getCriminalRecord().toString());
         this.grid.add(crimLabel, 0, 6);
-        this.grid.add(accCrim, 1, 6);
+        this.grid.add(accCR, 1, 6);
 
         // Reason for Entry
         Text reasonLabel = new Text("Reason for Entry: ");
-        Text accReason = new Text();
+        Text accEntry = new Text();
         if (accView.getReasonForEntry() == 0) {
-            accReason.setText("Relocation");
+            accEntry.setText("Relocation");
         } else if (accView.getGender() == 1) {
-            accReason.setText("Visiting");
+            accEntry.setText("Visiting");
         } else if (accView.getGender() == 2) {
-            accReason.setText("Job Opportunity");
+            accEntry.setText("Job Opportunity");
         } else if (accView.getGender() == 3) {
-            accReason.setText("Other");
+            accEntry.setText("Other");
         }
         this.grid.add(reasonLabel, 0, 7);
-        this.grid.add(accReason, 1, 7);
+        this.grid.add(accEntry, 1, 7);
 
         // Length of Stay
         Text lengthLabel = new Text("Length of Stay: ");
-        Text accLength = new Text(accView.getLengthOfIntendedStay());
+        Text accDuration = new Text(accView.getLengthOfIntendedStay());
         this.grid.add(lengthLabel, 0, 8);
-        this.grid.add(accLength, 1, 8);
+        this.grid.add(accDuration, 1, 8);
 
         // Username
         Text userLabel = new Text("Username: ");
-        Text accUser = new Text(accView.getAccountUsername());
+        Text accUN = new Text(accView.getAccountUsername());
         this.grid.add(userLabel, 0, 9);
-        this.grid.add(accUser, 1, 9);
+        this.grid.add(accUN, 1, 9);
 
         // Password
         Text passLabel = new Text("Password: ");
-        Text accPass = new Text(accView.getAccountPassword());
+        Text accPW = new Text(accView.getAccountPassword());
         this.grid.add(passLabel, 0, 10);
-        this.grid.add(accPass, 1, 10);
+        this.grid.add(accPW, 1, 10);
 
         // Alien Number
         Text aNumLabel = new Text("Alien Number: ");
-        Text accANum = new Text(String.valueOf(accView.getAlienNumber()));
+        Text accAlien = new Text(String.valueOf(accView.getAlienNumber()));
         this.grid.add(aNumLabel, 0, 11);
-        this.grid.add(accANum, 1, 11);
+        this.grid.add(accAlien, 1, 11);
 
         // ID in System
         Text idLabel = new Text("ID in System: ");
@@ -143,42 +143,98 @@ public class Approval extends Application {
         // Status
         Text statusLabel = new Text("Current Status: ");
         Text accStatus = new Text();
-        if ()
+        // if ()
         this.grid.add(statusLabel, 0, 13);
         this.grid.add(accStatus, 1, 13);
 
         // Phone Number
         Text phoneLabel = new Text("Phone Number: ");
-        Text accPhone = new Text("Null");
+        Text accPnum = new Text("Null");
         this.grid.add(phoneLabel, 0, 14);
-        this.grid.add(accPhone, 1, 14);
+        this.grid.add(accPnum, 1, 14);
 
         // Additional Information
         Text extraLabel = new Text("Additional Information: ");
-        Text accExtra = new Text("Null");
+        Text accEX = new Text("Null");
         this.grid.add(extraLabel, 0, 15);
-        this.grid.add(accExtra, 1, 15);
+        this.grid.add(accEX, 1, 15);
 
 
         stage.setTitle("Account Approval Form");
+
+        // Approve button
         Button btnApprove = new Button("Approve");
         btnApprove.setOnAction(
                 // Make this update the workflow status
                 e -> {
                     if (w.updateWorkflowStatus(Status.DONE, acc)) {
-                        accStatus.setText(Status.DONE.toString());
+                        // accStatus.setText(Status.DONE.toString());
                     }
         });
+
+        // Reject Button
         Button btnReject = new Button("Reject");
         btnReject.setOnAction(
                 // Make this update the workflow status
                 e -> {
                     if (w.updateWorkflowStatus(Status.FAIL, acc)) {
-                        accStatus.setText(accView.getStatus().toString());
+                        // accStatus.setText(accView.getStatus().toString());
                     }
-        });
+                });
+
+        // Clear button
+        Button btnClear = new Button("Clear");
+        btnClear.setOnAction(
+                // Clear everything
+                e -> {
+                    accName.setText("Null");
+                    accEmail.setText("Null");
+                    accDOB.setText("Null");
+                    accGender.setText("Null");
+                    accCNT.setText("Null");
+                    accMD.setText("Null");
+                    accCR.setText("Null");
+                    accEntry.setText("Null");
+                    accDuration.setText("Null");
+                    accUN.setText("Null");
+                    accPW.setText("Null");
+                    accAlien.setText("Null");
+                    accID.setText("Null");
+                    accStatus.setText("Null");
+                    accPnum.setText("Null");
+                    accEX.setText("Null");
+                });
+
+        // Next button
+        Button btnNext = new Button("Next");
+        btnNext.setOnAction(
+                // Make this update the workflow status
+                e -> {
+                    long AcID = w.getItemWithStatus(Status.APPROVAL);
+                    Account accCurrent = null;
+                    Account.testPopulateList();
+                    accCurrent = Account.getAccount(AcID);
+
+                    accName.setText(accCurrent.getName());
+                    accEmail.setText(accCurrent.getEmail());
+                    accDOB.setText(accCurrent.getDOB().toString());
+                    if (accCurrent.getGender() == 0) {
+                        accGender.setText("Male");
+                    } else if (accCurrent.getGender() == 1) {
+                        accGender.setText("Female");
+                    } else if (accCurrent.getGender() == 2) {
+                        accGender.setText("Other");
+                    }
+                    accLength.setText(accCurrent.getLengthOfIntendedStay());
+                    accUser.setText(accCurrent.getAccountUsername());
+                    accPass.setText(accCurrent.getAccountPassword());
+                    accANum.setText(Long.toString(accCurrent.getAlienNumber()));
+                    accID.setText(Long.toString(accCurrent.getIdInSystem()));
+                });
+
+        // Assemble the button bar
         ButtonBar bar = new ButtonBar();
-        bar.getButtons().addAll(btnApprove, btnReject);
+        bar.getButtons().addAll(btnApprove, btnReject, btnClear, btnNext);
 
         this.grid.add(bar, 0, 16, 1, 1);
 

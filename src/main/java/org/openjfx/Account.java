@@ -407,14 +407,18 @@ public class Account {
         CriminalRecord testCriminalRecord = new CriminalRecord();
         testCriminalRecord.hasRecord = true;
         testCriminalRecord.violations = new String[] { "Arson", "Vandalism" };
-        accounts = accounts && accList.add(new Account("Crew Terrys", "c.terrys@gmail.com", LocalDate.of(1973, 3, 20),
-                0,
-                "Germany", "Broken Legs",
-                testCriminalRecord, 3, "12 days", "crews", "terrys123", new PhoneNumber(1, 4834683211l), ""));
 
-        accounts = accounts && accList.add(new Account("Terry Crews", "t.crews@gmail.com", LocalDate.of(1968, 7, 30), 0,
+        // KABIR: You used the private constructor instead of the public "constructor"
+        // that adds to the List I changed it to addAccount
+
+        addAccount("Crew Terrys", "c.terrys@gmail.com", LocalDate.of(1973, 3, 20), 0,
+                "Germany", "Broken Legs", testCriminalRecord, 3, "12 days", "crews", "terrys123",
+                new PhoneNumber(1, 4834683211l), "");
+
+        addAccount("Terry Crews", "t.crews@gmail.com", LocalDate.of(1968, 7, 30), 0,
                 "Brazil", "",
-                new CriminalRecord(), 0, "12 years", "terry", "crews123", new PhoneNumber(1, 1234567890l), ""));
+                new CriminalRecord(), 0, "12 years", "terry", "crews123", new PhoneNumber(1, 1234567890l), "");
+
         return accounts;
     }
 }
