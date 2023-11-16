@@ -17,6 +17,7 @@ import javafx.scene.text.*;
 public class Review extends Application {
     private BorderPane base = new BorderPane();
     private GridPane gridPane = new GridPane();
+    private boolean accountShowing = false;
 
     // Used by home page
     public BorderPane getBorderPane() {
@@ -140,8 +141,10 @@ public class Review extends Application {
         bar.setPrefWidth(100);
         bar.setAlignment(Pos.CENTER);
         Button nextApplicationButton = new Button("Next Application");
+        Button clearButton = new Button("Clear");
         Button runTestButton = new Button("Run Tests");
 
+        clearButton.setMinWidth(bar.getPrefWidth());
         runTestButton.setMinWidth(bar.getPrefWidth());
         nextApplicationButton.setMinWidth(bar.getPrefWidth());
         bar.getChildren().addAll(runTestButton, nextApplicationButton);

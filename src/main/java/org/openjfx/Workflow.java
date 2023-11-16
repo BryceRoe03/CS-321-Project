@@ -80,8 +80,7 @@ public class Workflow {
      *         system.
      */
     public static boolean addItem(Long idInSystem) {
-        q.add(idInSystem);
-        return true;
+        return q.add(idInSystem);
     }
 
     /**
@@ -92,7 +91,7 @@ public class Workflow {
      * @return Integer - Id of the next account to pull with the corresponding
      *         Status/-1 if failed.
      */
-    public static long getItem(Status workflowStatus) {
+    public static long getItemWithStatus(Status workflowStatus) {
         Iterator<Long> it = q.iterator();
 
         // Find node
@@ -100,8 +99,8 @@ public class Workflow {
             Long tmp = it.next();
             // If the status is workflowStaus
             if (Account.getAccount(tmp).getStatus().equals(workflowStatus)) {
-                q.remove(tmp);
-                q.add(tmp);
+                // q.remove(tmp);
+                // q.add(tmp);
                 return tmp;
             }
         }
