@@ -59,7 +59,7 @@ public class Home extends Application {
         // Event to change screen to Data Entry
         entry.setOnAction( e -> {
             DataEntry d = new DataEntry();
-            this.gp = d.getGridPane();
+            this.gp = d.dataEntryScreen();
             // d.setAccountsForTesting(this.accList);
             Scene scene = new Scene(this.gp, 700, 700);
             d.start(stage);
@@ -70,7 +70,7 @@ public class Home extends Application {
         // Event to change screen to Review
         review.setOnAction( e -> {
             Review rev = new Review();
-            BorderPane gotBase = rev.getBorderPane();
+            BorderPane gotBase = rev.reviewScreen();
             Scene scene = new Scene(gotBase, 700, 700);
             rev.start(stage);
             stage.setScene(scene);
@@ -80,7 +80,7 @@ public class Home extends Application {
         // Event to change screen to Approval
         approve.setOnAction( e -> {
             Approval ap = new Approval();
-            this.gp = ap.getGridPane();
+            this.gp = ap.approvalScreen();
             Scene scene = new Scene(this.gp, 700, 700);
             ap.start(stage);
             stage.setScene(scene);

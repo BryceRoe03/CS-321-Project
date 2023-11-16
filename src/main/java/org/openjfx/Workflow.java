@@ -108,6 +108,6 @@ public class Workflow {
          * If node is not found or queue is null, return null. If node is found, update
          * node before, node after, status of current, and add to queue again.
          */
-        return (long) -1;
+        return -1L;
     }
 }

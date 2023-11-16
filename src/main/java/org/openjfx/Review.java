@@ -4,6 +4,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -20,7 +21,7 @@ public class Review extends Application {
     private boolean accountShowing = false;
 
     // Used by home page
-    public BorderPane getBorderPane() {
+    public BorderPane reviewScreen() {
         return this.base;
     }
 
@@ -63,9 +64,9 @@ public class Review extends Application {
 
         // Country of Origin
         Text countryLabel = new Text("Country of Origin: ");
-        Text accCount = new Text("Null");
+        Text accCountry = new Text("Null");
         this.gridPane.add(countryLabel, 0, 4);
-        this.gridPane.add(accCount, 1, 4);
+        this.gridPane.add(accCountry, 1, 4);
 
         // Medical History
         Text medicalLabel = new Text("Medical History: ");
@@ -147,13 +148,102 @@ public class Review extends Application {
         clearButton.setMinWidth(bar.getPrefWidth());
         runTestButton.setMinWidth(bar.getPrefWidth());
         nextApplicationButton.setMinWidth(bar.getPrefWidth());
-        bar.getChildren().addAll(runTestButton, nextApplicationButton);
+        bar.getChildren().addAll(runTestButton, nextApplicationButton, clearButton);
         BorderPane.setAlignment(bar, Pos.CENTER);
         this.base.setBottom(bar);
 
-        // var scene = new Scene(this.base, 700, 700);
-        // primaryStage.setScene(scene);
-        // primaryStage.show();
+        Account.testPopulateList();
+        Workflow.updateWorkflowStatus(Status.REVIEW, 0);
+        Workflow.updateWorkflowStatus(Status.REVIEW, 1);
+
+        clearButton.setOnAction(e -> {
+            accName.setText("");
+            accEmail.setText("");
+            accDOB.setText("");
+            accGender.setText("");
+            accCountry.setText("");
+            accMed.setText("");
+            accCrim.setText("");
+            accReason.setText("");
+            accLength.setText("");
+            accUser.setText("");
+            accPass.setText("");
+            accANum.setText("");
+            accID.setText("");
+            accStatus.setText("");
+            accPhone.setText("");
+            accExtra.setText("");
+        });
+
+        runTestButton.setOnAction(e -> {
+
+            long currId = Long.parseLong(accID.getText());
+
+            if (Account.dataReview(currId) == 0) {
+                Workflow.updateWorkflowStatus(Status.APPROVAL, currId);
+            }
+        });
+
+        nextApplicationButton.setOnAction(e -> {
+            long id = Workflow.getItemWithStatus(Status.REVIEW);
+            Account ac = Account.getAccount(id);
+
+            accName.setText(ac.getName());
+            accEmail.setText(ac.getEmail());
+            accDOB.setText(ac.getDOB().toString());
+            switch (ac.getGender()) {
+                case 0:
+                    accGender.setText("Male");
+                    break;
+                case 1:
+                    accGender.setText("Female");
+                    break;
+                case 2:
+                    accGender.setText("Other");
+                    break;
+            }
+            accCountry.setText(ac.getCountryOfOrigin());
+            accMed.setText(ac.getMedicalConditions());
+            accCrim.setText(ac.getCriminalRecord().toString());
+            switch (ac.getReasonForEntry()) {
+                case 0:
+                    accReason.setText("Relocation");
+                    break;
+                case 1:
+                    accReason.setText("Visiting");
+                    break;
+                case 2:
+                    accReason.setText("Job Opportunity");
+                    break;
+                case 3:
+                    accReason.setText("Other");
+                    break;
+            }
+            accLength.setText(ac.getLengthOfIntendedStay());
+            accUser.setText(ac.getAccountUsername());
+            accPass.setText(ac.getAccountPassword());
+            accANum.setText(Long.toString(ac.getAlienNumber()));
+            accID.setText(Long.toString(ac.getIdInSystem()));
+            switch (ac.getStatus().getStatus()) {
+                case 1:
+                    accStatus.setText("CREATED");
+                    break;
+                case 2:
+                    accStatus.setText("REVIEW");
+                    break;
+                case 3:
+                    accStatus.setText("APPROVAL");
+                    break;
+                case 4:
+                    accStatus.setText("DONE");
+                    break;
+                case 5:
+                    accStatus.setText("FAIL");
+                    break;
+            }
+            accPhone.setText(ac.getPhoneNumber().toString());
+            accExtra.setText(ac.getAdditionalInformation());
+        });
 
     }
 

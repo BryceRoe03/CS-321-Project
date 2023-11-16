@@ -84,7 +84,7 @@ public class DataEntry extends Application {
      * 
      * @return gp GridPane - GridPane with screen content.
      */
-    public GridPane getGridPane() {
+    public GridPane dataEntryScreen() {
         return this.gp;
     }
 
