@@ -32,9 +32,10 @@ public class Approval extends Application {
         // "None", new PhoneNumber(1, 123456789), "None");
         // ArrayList<Account> acc = Account.getAccountList();
         Workflow w = Workflow.getWorkflow();
+        Workflow.updateWorkflowStatus(Status.APPROVAL, 0);
+        Workflow.updateWorkflowStatus(Status.APPROVAL, 1);
         long acc = w.getItemWithStatus(Status.APPROVAL);
         Account accView = null;
-        Account.testPopulateList();
         accView = Account.getAccount(acc);
 
         // Setting column and row gap
@@ -143,19 +144,27 @@ public class Approval extends Application {
         // Status
         Text statusLabel = new Text("Current Status: ");
         Text accStatus = new Text();
-        // if ()
+        if (accView.getStatus().getStatus() == 3) {
+            accStatus.setText("Approval");
+        }
+        else if (accView.getStatus().getStatus() == 4) {
+            accStatus.setText("Done");
+        }
+        else if (accView.getStatus().getStatus() == 5) {
+            accStatus.setText("Fail");
+        }
         this.grid.add(statusLabel, 0, 13);
         this.grid.add(accStatus, 1, 13);
 
         // Phone Number
         Text phoneLabel = new Text("Phone Number: ");
-        Text accPnum = new Text("Null");
+        Text accPnum = new Text(accView.getPhoneNumber().toString());
         this.grid.add(phoneLabel, 0, 14);
         this.grid.add(accPnum, 1, 14);
 
         // Additional Information
         Text extraLabel = new Text("Additional Information: ");
-        Text accEX = new Text("Null");
+        Text accEX = new Text(accView.getAdditionalInformation().toString());
         this.grid.add(extraLabel, 0, 15);
         this.grid.add(accEX, 1, 15);
 
@@ -225,11 +234,31 @@ public class Approval extends Application {
                     } else if (accCurrent.getGender() == 2) {
                         accGender.setText("Other");
                     }
-                    accLength.setText(accCurrent.getLengthOfIntendedStay());
-                    accUser.setText(accCurrent.getAccountUsername());
-                    accPass.setText(accCurrent.getAccountPassword());
-                    accANum.setText(Long.toString(accCurrent.getAlienNumber()));
+                    accCNT.setText(accCurrent.getLengthOfIntendedStay());
+                    accUN.setText(accCurrent.getAccountUsername());
+                    accPW.setText(accCurrent.getAccountPassword());
+                    accAlien.setText(Long.toString(accCurrent.getAlienNumber()));
                     accID.setText(Long.toString(accCurrent.getIdInSystem()));
+                    if (accCurrent.getReasonForEntry() == 0) {
+                        accEntry.setText("Relocation");
+                    } else if (accCurrent.getGender() == 1) {
+                        accEntry.setText("Visiting");
+                    } else if (accCurrent.getGender() == 2) {
+                        accEntry.setText("Job Opportunity");
+                    } else if (accCurrent.getGender() == 3) {
+                        accEntry.setText("Other");
+                    }
+                    if (accCurrent.getStatus().getStatus() == 3) {
+                        accStatus.setText("Approval");
+                    }
+                    else if (accCurrent.getStatus().getStatus() == 4) {
+                        accStatus.setText("Done");
+                    }
+                    else if (accCurrent.getStatus().getStatus() == 5) {
+                        accStatus.setText("Fail");
+                    }
+                    accPnum.setText(accCurrent.getPhoneNumber().toString());
+                    accEX.setText(accCurrent.getAdditionalInformation().toString());
                 });
 
         // Assemble the button bar

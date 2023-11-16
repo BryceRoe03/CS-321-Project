@@ -183,7 +183,7 @@ public class Review extends Application {
 
         nextApplicationButton.setOnAction(e -> {
 
-            // Account.testPopulateList();
+            // Will delete after testing
             Workflow.updateWorkflowStatus(Status.REVIEW, 0);
             Workflow.updateWorkflowStatus(Status.REVIEW, 1);
 
