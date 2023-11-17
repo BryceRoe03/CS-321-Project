@@ -179,6 +179,7 @@ public class Review extends Application {
             if (Account.dataReview(currId) == 0) {
                 Workflow.updateWorkflowStatus(Status.APPROVAL, currId);
             }
+            else Workflow.updateWorkflowStatus(Status.FAIL, currId);
         });
 
         nextApplicationButton.setOnAction(e -> {
