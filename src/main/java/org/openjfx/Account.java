@@ -299,6 +299,10 @@ public class Account {
      * @return Account - Individual's account.
      */
     public static Account getAccount(long idInSystem) {
+        if (idInSystem == -1) {
+            System.out.println("-1 ID!!!!");
+            return null;
+        }
         for (Account i : accList) {
             if (i.getIdInSystem() == idInSystem) {
                 return i;
@@ -334,12 +338,12 @@ public class Account {
      * corresponding account.
      * 
      * @param idInSystem - Long corresponding to the id for the account.
-     * @return Integer - Id of the user in the system.
+     * @return Long - Id of the user in the system.
      */
-    public static int dataReview(long idInSystem) {
+    public static long dataReview(long idInSystem) {
         // calls both validateAccount() and saveAccountToDatabase()
         // only calls save if validate passes
-        return 0;
+        return 0L;
     }
 
     // FOR DATA APPROVAL
@@ -348,22 +352,22 @@ public class Account {
      * saveToDatabase method to update any changes made to the account.
      * 
      * @param idInSystem - Long corresponding to the id for the account.
-     * @return Integer - Id of the user in the system.
+     * @return Long - Id of the user in the system.
      */
-    public static int dataApprove(long idInSystem) {
-        // calls both approvaAccount() and saveAccountToDatabase()
+    public static long dataApprove(long idInSystem) {
+        // calls both approveAccount() and saveAccountToDatabase()
         // only calls save if approve passes
-        return 0;
+        return 0L;
     }
 
     /**
      * Private method to approve the acocunt.
      * 
      * @param idInSystem - Long corresponding to the id for the account.
-     * @return Integer - Id of the user in the system.
+     * @return Long - Id of the user in the system.
      */
-    private static int approveAccount(long idInSystem) {
-        return 0;
+    private static long approveAccount(long idInSystem) {
+        return 0L;
     }
 
     /**

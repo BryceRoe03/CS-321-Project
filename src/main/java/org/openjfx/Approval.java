@@ -25,7 +25,7 @@ public class Approval extends Application {
     }
 
     @Override
-    public void start(Stage stage) {
+    public void start(Stage mainStage) {
 
         // Account freddy = Account.addAccount("Feddy Faber", "urmom@gmail.com",
         // LocalDate.now(), 0, "USA", "None", new CriminalRecord(), 0, "None", "None",
@@ -171,7 +171,7 @@ public class Approval extends Application {
         this.grid.add(accEX, 1, 15);
 
 
-        stage.setTitle("Account Approval Form");
+        mainStage.setTitle("Account Approval Form");
 
         // Approve button
         Button btnApprove = new Button("Approve");
@@ -226,7 +226,6 @@ public class Approval extends Application {
                     Workflow.updateWorkflowStatus(Status.APPROVAL, 1);
                     long AcID = newW.getItemWithStatus(Status.APPROVAL);
                     Account accCurrent = null;
-                    Account.testPopulateList();
                     accCurrent = Account.getAccount(AcID);
 
                     accName.setText(accCurrent.getName());
@@ -286,17 +285,6 @@ public class Approval extends Application {
 
         this.grid.setAlignment(Pos.CENTER);
 
-        // Creation of dummy Account business object here
-
-        
-        // var scene = new Scene(this.grid, 640, 480);
-
-        // stage.setScene(scene);
-        // stage.show();
     }
-
-    // public static void main(String[] args) {
-    //     launch(args);
-    // }
 
 }

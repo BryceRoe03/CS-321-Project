@@ -55,13 +55,14 @@ public class Workflow {
                 q.remove(id);
                 q.add(id);
 
-                /* Check work using
-                Iterator<Long> it = q.iterator();
-                System.out.println("\tList is: ");
-                while (it.hasNext()) {
-                    System.out.print(it.next() + " -> ");
-                }
-                */
+                /*
+                 * Check work using
+                 * Iterator<Long> it = q.iterator();
+                 * System.out.println("\tList is: ");
+                 * while (it.hasNext()) {
+                 * System.out.print(it.next() + " -> ");
+                 * }
+                 */
                 return true;
             }
         }
@@ -80,7 +81,10 @@ public class Workflow {
      *         system.
      */
     public static boolean addItem(Long idInSystem) {
-        return q.add(idInSystem);
+        if (idInSystem >= 0 && !q.contains(idInSystem)) {
+            return q.add(idInSystem);
+        }
+        return false;
     }
 
     /**
@@ -94,16 +98,20 @@ public class Workflow {
     public static long getItemWithStatus(Status workflowStatus) {
         Iterator<Long> it = q.iterator();
 
+        String total = "";
         // Find node
         while (it.hasNext()) {
             Long tmp = it.next();
-            // If the status is workflowStaus
-            if (Account.getAccount(tmp).getStatus().equals(workflowStatus)) {
-                // q.remove(tmp);
-                // q.add(tmp);
-                return tmp;
+            if (Account.getAccount(tmp) != null) {
+                // If the status is workflowStaus
+                if (Account.getAccount(tmp).getStatus().equals(workflowStatus)) {
+                    // q.remove(tmp);
+                    // q.add(tmp);
+                    return tmp;
+                }
             }
         }
+        System.out.println(total);
         /*
          * If node is not found or queue is null, return null. If node is found, update
          * node before, node after, status of current, and add to queue again.
