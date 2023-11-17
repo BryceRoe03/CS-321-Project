@@ -241,6 +241,8 @@ public class DataEntry extends Application {
             Integer international = null;
             Long pn = null;
             try {
+                // if this date has invalid type, phone nubmer will not be set and will be caught by the catch.
+                System.out.println(dateField.getValue().toString());
                 // make Phone Number
                 international = Integer.parseInt(pnInternationalField.getText());
                 pn = Long.parseLong(pnField.getText());
