@@ -16,8 +16,6 @@ import javafx.geometry.Pos;
 import javafx.collections.FXCollections;
 import javafx.scene.control.ButtonBar.*;
 import javafx.scene.control.Alert.AlertType;
-// import javafx.event.ActionEvent;
-// import javafx.event.EventHandler;
 import javafx.scene.control.*;
 import javafx.scene.text.*;
 
@@ -72,7 +70,7 @@ public class DataEntry extends Application {
         }
 
         // Is phone number greater than 10 characters
-        if (("" + pn).length() != 10) {
+        if (("" + pn.number).length() != 10) {
             allAreTrue |= (0x1 << 5);
         }
         return allAreTrue;
@@ -123,68 +121,68 @@ public class DataEntry extends Application {
          */
 
         // Name
-        Text nameLabel = new Text("Full Name");
+        Text nameLabel = new Text("Full Name*");
         TextField nameField = new TextField();
         nameField.setPromptText("Enter Your Full Name...");
 
         // Email
-        Text emailLabel = new Text("Email");
+        Text emailLabel = new Text("Email*");
         TextField emailField = new TextField();
         emailField.setPromptText("Enter Your Email...");
 
         // LocalDate
-        Text dateLabel = new Text("Date");
+        Text dateLabel = new Text("Date*");
         DatePicker dateField = new DatePicker();
 
         // Gender
-        Text genderLabel = new Text("Gender");
+        Text genderLabel = new Text("Gender*");
         String genderOptions[] = { "Male", "Female", "Other" };
         // Create a combo box
         ComboBox genderField = new ComboBox(FXCollections.observableArrayList(genderOptions));
 
         // Country of Origin
-        Text countryOfOriginLabel = new Text("Country of Origin");
+        Text countryOfOriginLabel = new Text("Country of Origin*");
         TextField countryOfOriginField = new TextField();
         countryOfOriginField.setPromptText("Enter Your Country of Origin...");
 
         // Medical Conditions
         Text medicalConditionsLabel = new Text(
-                "Medical Conditions \n(Use Commas ',' as a separator or\nleave empty if none))");
+                "Medical Conditions \n(Use Commas ',' as a separator or\nleave empty if none))*");
         TextField medicalConditionsField = new TextField();
         medicalConditionsField.setPromptText("Enter Your Medical Condition(s)...");
 
         // Criminal Record
         Text criminalRecordLabel = new Text(
-                "Criminal Record \n(Use Commas ',' as a separator or\nleave empty if none)");
+                "Criminal Record \n(Use Commas ',' as a separator or\nleave empty if none)*");
         TextField criminalRecordField = new TextField();
         criminalRecordField.setPromptText("Enter Your Criminal Record(s)...");
 
         // Reason for Entry
-        Text entryLabel = new Text("Reason For Entry");
+        Text entryLabel = new Text("Reason For Entry*");
         String entryOptions[] = { "Relocation", "Visiting", "Job Opportunity", "Other" };
         // Create a combo box
         ComboBox entryField = new ComboBox(FXCollections.observableArrayList(entryOptions));
 
         // Length of Intended Stay
-        Text stayLabel = new Text("Length of Intended Stay");
+        Text stayLabel = new Text("Length of Intended Stay*");
         TextField stayField = new TextField();
         stayField.setPromptText("Enter The Length of Your Intended Stay...");
 
         // accountUsername
-        Text usernameLabel = new Text("Username");
+        Text usernameLabel = new Text("Username*");
         TextField usernameField = new TextField();
         usernameField.setPromptText("Enter Your Username...");
 
         // accountPassword
-        Text passwordLabel = new Text("Password");
+        Text passwordLabel = new Text("Password*");
         TextField passwordField = new TextField();
         passwordField.setPromptText("Enter Your Password...");
 
         // Phone Number
-        Text pnInternationalLabel = new Text("International Code For Your Phone Number");
+        Text pnInternationalLabel = new Text("International Code For Your Phone Number*");
         TextField pnInternationalField = new TextField();
         pnInternationalField.setPromptText("Enter Your International Code For Your Phone Number...");
-        Text pnLabel = new Text("Phone Number");
+        Text pnLabel = new Text("Phone Number*");
         TextField pnField = new TextField();
         pnField.setPromptText("Enter Your Phone Number...");
 
@@ -193,6 +191,7 @@ public class DataEntry extends Application {
         TextField addInfoField = new TextField();
         addInfoField.setPromptText("Enter Any Other additional Information");
 
+        Text requiredLabel = new Text("* = Required Field");
         // ButtonBar
         ButtonBar buttonBar = new ButtonBar();
         // Submit Button
@@ -304,7 +303,7 @@ public class DataEntry extends Application {
                         genderElement, countryOfOriginField.getText(), medicalConditionsField.getText(), crimRecord,
                         entryElement, stayField.getText(), usernameField.getText(), passwordField.getText(), combinedpn,
                         addInfoField.getText());
-                Alert alert = new Alert(AlertType.NONE);
+                Alert alert = new Alert(AlertType.INFORMATION);
                 alert.setContentText("Your account has been sent for review.");
                 alert.show();
             }
@@ -320,6 +319,22 @@ public class DataEntry extends Application {
                     System.out.println(accList.get(a).toString());
                 }
                 System.out.println();
+                // clear fields on success
+                nameField.setText("");
+                emailField.setText("");
+                dateField.setValue(null);
+                genderField.setValue(null);
+                countryOfOriginField.setText("");
+                medicalConditionsField.setText("");
+                criminalRecordField.setText("");
+                entryField.setValue(null);
+                stayField.setText("");
+                usernameField.setText("");
+                passwordField.setText("");
+                pnInternationalField.setText("");
+                pnField.setText("");
+                addInfoField.setText("");
+
             } else { // On failed add
                 // Set button data
                 ButtonBar.setButtonData(submit, ButtonData.NO);
@@ -382,7 +397,8 @@ public class DataEntry extends Application {
         this.gp.add(pnField, 1, 12);
         this.gp.add(addInfoLabel, 0, 13);
         this.gp.add(addInfoField, 1, 13);
-        this.gp.add(buttonBar, 0, 14);
+        this.gp.add(requiredLabel, 0, 14);
+        this.gp.add(buttonBar, 1, 14);
 
         /*
          * Removed because of home screen
