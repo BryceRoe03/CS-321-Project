@@ -305,6 +305,7 @@ public class DataEntry extends Application {
                         genderElement, countryOfOriginField.getText(), medicalConditionsField.getText(), crimRecord,
                         entryElement, stayField.getText(), usernameField.getText(), passwordField.getText(), combinedpn,
                         addInfoField.getText());
+                Workflow.updateWorkflowStatus(Status.REVIEW, accountToAdd.getIdInSystem());
                 Alert alert = new Alert(AlertType.INFORMATION);
                 alert.setContentText("Your account has been sent for review.");
                 alert.show();
@@ -317,8 +318,9 @@ public class DataEntry extends Application {
                 ButtonBar.setButtonData(clear, ButtonData.NO);
                 // List all accounts in system
                 System.out.println("Accounts:");
+                accList = Account.getAccountList();
                 for (int a = 0; a < accList.size(); a++) {
-                    System.out.println(accList.get(a).toString());
+                    System.out.println("\t" + accList.get(a).toString());
                 }
                 System.out.println();
                 // clear fields on success
