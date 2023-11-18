@@ -8,13 +8,17 @@
 - Review (Daniel)
 - Approval (Bryce)
 ## Structure
-### ObjectFiles
+### src/main/java/org/openjfx 
 - Account.java
+- Approval.java
 - CriminalRecord.java
+- DataEntry.java
+- Home.java
 - PhoneNumber.java
-- Status.jar
-- Workflow.jar
-### TesterFiles
+- Review.java
+- Status.java
+- Workflow.java
+### test/java/org/openjfx 
 - AccountTest.java
 - WorkflowTest.java
 ### lib (jar files)

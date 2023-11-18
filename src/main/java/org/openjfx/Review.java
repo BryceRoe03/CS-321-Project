@@ -37,102 +37,102 @@ public class Review extends Application {
         this.gridPane.setHgap(100);
         this.gridPane.setVgap(10);
 
-        // Grid stuff
-        // Name
-        Text nameLabel = new Text("Name: ");
+        // Setting Grid stuff
+        // Full Name
+        Text fullNameText = new Text("Name: ");
         Text accName = new Text("[]");
-        this.gridPane.add(nameLabel, 0, 0);
+        this.gridPane.add(fullNameText, 0, 0);
         this.gridPane.add(accName, 1, 0);
 
         // Email
-        Text emailLabel = new Text("Email: ");
+        Text emailText = new Text("Email: ");
         Text accEmail = new Text("[]");
-        this.gridPane.add(emailLabel, 0, 1);
+        this.gridPane.add(emailText, 0, 1);
         this.gridPane.add(accEmail, 1, 1);
 
-        // DOB
-        Text dobLabel = new Text("Date of Birth: ");
-        Text accDOB = new Text("[]");
-        this.gridPane.add(dobLabel, 0, 2);
-        this.gridPane.add(accDOB, 1, 2);
+        // Date of Birth
+        Text dateOfBirthText = new Text("Date of Birth: ");
+        Text accDateOfBirth = new Text("[]");
+        this.gridPane.add(dateOfBirthText, 0, 2);
+        this.gridPane.add(accDateOfBirth, 1, 2);
 
         // Gender
-        Text genderLabel = new Text("Gender: ");
+        Text genderText = new Text("Gender: ");
         Text accGender = new Text("[]");
-        this.gridPane.add(genderLabel, 0, 3);
+        this.gridPane.add(genderText, 0, 3);
         this.gridPane.add(accGender, 1, 3);
 
         // Country of Origin
-        Text countryLabel = new Text("Country of Origin: ");
-        Text accCountry = new Text("[]");
-        this.gridPane.add(countryLabel, 0, 4);
-        this.gridPane.add(accCountry, 1, 4);
+        Text countryOfOriginText = new Text("Country of Origin: ");
+        Text accCountryOfOrigin = new Text("[]");
+        this.gridPane.add(countryOfOriginText, 0, 4);
+        this.gridPane.add(accCountryOfOrigin, 1, 4);
 
         // Medical History
-        Text medicalLabel = new Text("Medical History: ");
-        Text accMed = new Text("[]");
-        this.gridPane.add(medicalLabel, 0, 5);
-        this.gridPane.add(accMed, 1, 5);
+        Text medicalHistoryText = new Text("Medical History: ");
+        Text accMedicalHistory = new Text("[]");
+        this.gridPane.add(medicalHistoryText, 0, 5);
+        this.gridPane.add(accMedicalHistory, 1, 5);
 
         // Criminal Record
-        Text crimLabel = new Text("Criminal Record: ");
-        Text accCrim = new Text("[]");
-        this.gridPane.add(crimLabel, 0, 6);
-        this.gridPane.add(accCrim, 1, 6);
+        Text criminalRecordText = new Text("Criminal Record: ");
+        Text accCriminalRecord = new Text("[]");
+        this.gridPane.add(criminalRecordText, 0, 6);
+        this.gridPane.add(accCriminalRecord, 1, 6);
 
         // Reason for Entry
-        Text reasonLabel = new Text("Reason for Entry: ");
-        Text accReason = new Text("[]");
-        this.gridPane.add(reasonLabel, 0, 7);
-        this.gridPane.add(accReason, 1, 7);
+        Text reasonForEntryText = new Text("Reason for Entry: ");
+        Text accReasonForEntry = new Text("[]");
+        this.gridPane.add(reasonForEntryText, 0, 7);
+        this.gridPane.add(accReasonForEntry, 1, 7);
 
         // Length of Stay
-        Text lengthLabel = new Text("Length of Stay: ");
-        Text accLength = new Text("[]");
-        this.gridPane.add(lengthLabel, 0, 8);
-        this.gridPane.add(accLength, 1, 8);
+        Text lengthOfStayText = new Text("Length of Stay: ");
+        Text acclengthOfStay = new Text("[]");
+        this.gridPane.add(lengthOfStayText, 0, 8);
+        this.gridPane.add(acclengthOfStay, 1, 8);
 
         // Username
-        Text userLabel = new Text("Username: ");
-        Text accUser = new Text("[]");
-        this.gridPane.add(userLabel, 0, 9);
-        this.gridPane.add(accUser, 1, 9);
+        Text usernameText = new Text("Username: ");
+        Text accUsername = new Text("[]");
+        this.gridPane.add(usernameText, 0, 9);
+        this.gridPane.add(accUsername, 1, 9);
 
         // Password
-        Text passLabel = new Text("Password: ");
-        Text accPass = new Text("[]");
-        this.gridPane.add(passLabel, 0, 10);
-        this.gridPane.add(accPass, 1, 10);
+        Text passwordText = new Text("Password: ");
+        Text accPassword = new Text("[]");
+        this.gridPane.add(passwordText, 0, 10);
+        this.gridPane.add(accPassword, 1, 10);
 
         // Alien Number
-        Text aNumLabel = new Text("Alien Number: ");
-        Text accANum = new Text("[]");
-        this.gridPane.add(aNumLabel, 0, 11);
-        this.gridPane.add(accANum, 1, 11);
+        Text alienNumberText = new Text("Alien Number: ");
+        Text accAlienNumber = new Text("[]");
+        this.gridPane.add(alienNumberText, 0, 11);
+        this.gridPane.add(accAlienNumber, 1, 11);
 
         // ID in System
-        Text idLabel = new Text("ID in System: ");
+        Text idText = new Text("ID in System: ");
         Text accID = new Text("[]");
-        this.gridPane.add(idLabel, 0, 12);
+        this.gridPane.add(idText, 0, 12);
         this.gridPane.add(accID, 1, 12);
 
         // Status
-        Text statusLabel = new Text("Current Status: ");
+        Text statusText = new Text("Current Status: ");
         Text accStatus = new Text("[]");
-        this.gridPane.add(statusLabel, 0, 13);
+        this.gridPane.add(statusText, 0, 13);
         this.gridPane.add(accStatus, 1, 13);
 
         // Phone Number
-        Text phoneLabel = new Text("Phone Number: ");
-        Text accPhone = new Text("[]");
-        this.gridPane.add(phoneLabel, 0, 14);
-        this.gridPane.add(accPhone, 1, 14);
+        Text phoneNumText = new Text("Phone Number: ");
+        Text accPhoneNum = new Text("[]");
+        this.gridPane.add(phoneNumText, 0, 14);
+        this.gridPane.add(accPhoneNum, 1, 14);
 
         // Additional Information
-        Text extraLabel = new Text("Additional Information: ");
-        Text accExtra = new Text("[]");
-        this.gridPane.add(extraLabel, 0, 15);
-        this.gridPane.add(accExtra, 1, 15);
+        Text extraText = new Text("Additional Information: ");
+        Text accExtraInfo = new Text("[]");
+        this.gridPane.add(extraText, 0, 15);
+        this.gridPane.add(accExtraInfo, 1, 15);
 
         BorderPane.setAlignment(this.gridPane, Pos.CENTER);
         this.base.setCenter(this.gridPane);
@@ -156,20 +156,20 @@ public class Review extends Application {
         clearButton.setOnAction(e -> {
             accName.setText("");
             accEmail.setText("");
-            accDOB.setText("");
+            accDateOfBirth.setText("");
             accGender.setText("");
-            accCountry.setText("");
-            accMed.setText("");
-            accCrim.setText("");
-            accReason.setText("");
-            accLength.setText("");
-            accUser.setText("");
-            accPass.setText("");
-            accANum.setText("");
+            accCountryOfOrigin.setText("");
+            accMedicalHistory.setText("");
+            accCriminalRecord.setText("");
+            accReasonForEntry.setText("");
+            acclengthOfStay.setText("");
+            accUsername.setText("");
+            accPassword.setText("");
+            accAlienNumber.setText("");
             accID.setText("");
             accStatus.setText("");
-            accPhone.setText("");
-            accExtra.setText("");
+            accPhoneNum.setText("");
+            accExtraInfo.setText("");
         });
 
         runTestButton.setOnAction(e -> {
@@ -194,7 +194,7 @@ public class Review extends Application {
 
             accName.setText(ac.getName());
             accEmail.setText(ac.getEmail());
-            accDOB.setText(ac.getDOB().toString());
+            accDateOfBirth.setText(ac.getDOB().toString());
             switch (ac.getGender()) {
                 case 0:
                     accGender.setText("Male");
@@ -206,27 +206,27 @@ public class Review extends Application {
                     accGender.setText("Other");
                     break;
             }
-            accCountry.setText(ac.getCountryOfOrigin());
-            accMed.setText(ac.getMedicalConditions());
-            accCrim.setText(ac.getCriminalRecord().toString());
+            accCountryOfOrigin.setText(ac.getCountryOfOrigin());
+            accMedicalHistory.setText(ac.getMedicalConditions());
+            accCriminalRecord.setText(ac.getCriminalRecord().toString());
             switch (ac.getReasonForEntry()) {
                 case 0:
-                    accReason.setText("Relocation");
+                    accReasonForEntry.setText("Relocation");
                     break;
                 case 1:
-                    accReason.setText("Visiting");
+                    accReasonForEntry.setText("Visiting");
                     break;
                 case 2:
-                    accReason.setText("Job Opportunity");
+                    accReasonForEntry.setText("Job Opportunity");
                     break;
                 case 3:
-                    accReason.setText("Other");
+                    accReasonForEntry.setText("Other");
                     break;
             }
-            accLength.setText(ac.getLengthOfIntendedStay());
-            accUser.setText(ac.getAccountUsername());
-            accPass.setText(ac.getAccountPassword());
-            accANum.setText(Long.toString(ac.getAlienNumber()));
+            acclengthOfStay.setText(ac.getLengthOfIntendedStay());
+            accUsername.setText(ac.getAccountUsername());
+            accPassword.setText(ac.getAccountPassword());
+            accAlienNumber.setText(Long.toString(ac.getAlienNumber()));
             accID.setText(Long.toString(ac.getIdInSystem()));
             switch (ac.getStatus().getStatus()) {
                 case 1:
@@ -245,8 +245,8 @@ public class Review extends Application {
                     accStatus.setText("FAIL");
                     break;
             }
-            accPhone.setText(ac.getPhoneNumber().toString());
-            accExtra.setText(ac.getAdditionalInformation());
+            accPhoneNum.setText(ac.getPhoneNumber().toString());
+            accExtraInfo.setText(ac.getAdditionalInformation());
         });
 
     }
