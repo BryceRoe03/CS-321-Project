@@ -112,9 +112,12 @@ public class AccountTest {
     public void testDataReview() {
         // Account ac = new Account();
 
+        // Next account to review 
         assertEquals(0, Account.dataReview(0L));
+        // Id of an account should not be less than 0
         assertFalse("testDataReview(): idInSystem should be greater than 0.", Account.dataReview(0L) < 0);
-        // fail("Not Yet Implemented!");
+        // Id of an account should less than the max Long Value
+        assertFalse("testDataReview(): idInSystem should be less than or equal to the max Value for a Long.", Account.dataReview(0L) > Long.MAX_VALUE);
     }
 
     /**
@@ -126,9 +129,13 @@ public class AccountTest {
     public void testDataApproval() {
         // Account ac = new Account();
 
+        // Next account to approve
         assertEquals(0, Account.dataApprove(0));
+        // Id of an account should not be less than 0
         assertFalse("dataApprove(): should return greater than 0 if passed.", Account.dataApprove(0) < 0);
-        // fail("Not Yet Implemented!");
+        // Id of an account should less than the max Long Value
+        assertFalse("testDataReview(): idInSystem should be less than or equal to the max Value for a Long.", Account.dataReview(0L) > Long.MAX_VALUE);
+
     }
 
     /**
