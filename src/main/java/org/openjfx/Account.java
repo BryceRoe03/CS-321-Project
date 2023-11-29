@@ -4,6 +4,11 @@ package org.openjfx;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import java.util.Properties;
+
 /**
  * Account Business Object.
  */
@@ -357,6 +362,12 @@ public class Account {
     public static long dataApprove(long idInSystem) {
         // calls both approveAccount() and saveAccountToDatabase()
         // only calls save if approve passes
+        if (idInSystem == 3) {
+            approveAccount(idInSystem);
+            Account fin_acc = getAccount(idInSystem);
+            fin_acc.setStatus(Status.APPROVAL);
+            saveAccountToDatabase(fin_acc);
+        }
         return 0L;
     }
 
@@ -367,8 +378,43 @@ public class Account {
      * @return Long - Id of the user in the system.
      */
     private static long approveAccount(long idInSystem) {
+        final String guser = "immigranttest01@gmail.com";
+        final String gpass = "barnyard123";
+
+        Properties setup = new Properties();
+        setup.put("mail.smtp.host", "smtp.gmail.com");
+        setup.put("mail.smtp.auth", "true");
+        setup.put("mail.smtp.port", "587");
+        setup.put("mail.smtp.starttls.enable", "true");
+
+        Session sesh = Session.getInstance(setup, new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(guser, gpass);
+            }
+        });
+
+        try {
+            Message approvalEmail = new MimeMessage(sesh);
+            approvalEmail.setFrom(new InternetAddress("immigranttest01@gmail.com"));
+            approvalEmail.setRecipients(
+                Message.RecipientType.TO,
+                InternetAddress.parse("immigtanttest02@gmail.com")  
+            );
+            approvalEmail.setSubject("Contratulations! Your account has been approved!");
+            approvalEmail.setText("Hello " + getAccount(idInSystem).getName() + ",\n\n Your account has been approved! See you in the next step of the process!\n\n- Immigration team\n(Do not reply)");
+
+            Transport.send(approvalEmail);
+            System.out.println("Go check your email stupid.");
+
+        } catch (MessagingException e) {
+            e.printStackTrace();
+            return 1L;
+        }
+
         return 0L;
     }
+
+    
 
     /**
      * Public method to search for a user's account.

@@ -25,7 +25,7 @@ public class Approval extends Application {
     }
 
     @Override
-    public void start(Stage mainStage) {
+    public void start(Stage mainStage) {    
 
         // Account freddy = Account.addAccount("Feddy Faber", "urmom@gmail.com",
         // LocalDate.now(), 0, "USA", "None", new CriminalRecord(), 0, "None", "None",
