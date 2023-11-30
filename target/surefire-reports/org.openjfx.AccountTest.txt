@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: org.openjfx.AccountTest
+-------------------------------------------------------------------------------
+Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.483 s - in org.openjfx.AccountTest
