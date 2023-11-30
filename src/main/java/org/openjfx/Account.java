@@ -356,10 +356,11 @@ public class Account {
         // Run tests
         if (validateAccount(idInSystem)) {
             acc.setStatus(Status.APPROVAL);
-            saveAccountToDatabase(acc);
+            // saveAccountToDatabase(acc);
             return 0L;
         } else {
             acc.setStatus(Status.FAIL);
+            // saveAccountToDatabase(acc);
             return 1L;
         }
 
@@ -382,7 +383,7 @@ public class Account {
         approveAccount(idInSystem);
 
         accList.remove(fin_acc);
-        saveAccountToDatabase(fin_acc);
+        // saveAccountToDatabase(fin_acc);
 
         if (fin_acc.getStatus() != Status.DONE) {
             return 1L;
