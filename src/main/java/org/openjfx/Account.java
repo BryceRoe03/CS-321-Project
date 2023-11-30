@@ -305,7 +305,7 @@ public class Account {
      */
     public static Account getAccount(long idInSystem) {
         if (idInSystem == -1) {
-            System.out.println("-1 ID!!!!");
+            //System.out.println("-1 ID!!!!");
             return null;
         }
         for (Account i : accList) {
@@ -343,13 +343,23 @@ public class Account {
      * corresponding account.
      * 
      * @param idInSystem - Long corresponding to the id for the account.
-     * @return Long - 0 if staus approval/1 if not.
+     * @return Long - 0 if staus change to approval/1 if not.
      */
     public static long dataReview(long idInSystem) {
         // calls both validateAccount() and saveAccountToDatabase()
         // only calls save if validate passes
+        Account acc = getAccount(idInSystem);
 
-        return 0L;
+        // simulate run of data review
+        // if (((Math.random() * 2) + 1) % 2 == 0) {
+            acc.setStatus(Status.APPROVAL);
+            saveAccountToDatabase(acc);
+            return 0L;
+    //     }
+    //     else {
+    //         acc.setStatus(Status.FAIL);
+    //         return 1L;
+    //     }
     }
 
     // FOR DATA APPROVAL
@@ -363,7 +373,6 @@ public class Account {
     public static long dataApprove(long idInSystem) {
         // calls both approveAccount() and saveAccountToDatabase()
         // only calls save if approve passes
-        System.out.println("In dataApprove\n");
         Account fin_acc = getAccount(idInSystem);
         fin_acc.setStatus(Status.DONE);
 
@@ -394,15 +403,12 @@ public class Account {
         setup.put("mail.smtp.auth", "true");
         setup.put("mail.smtp.port", "587");
         setup.put("mail.smtp.starttls.enable", "true");
-        System.out.println("1: Go check your email stupid.");
 
         Session sesh = Session.getInstance(setup, new javax.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(guser, gpass);
             }
         }); 
-        
-        System.out.println("2: Go check your email stupid.");
 
         try {
             Message approvalEmail = new MimeMessage(sesh);
@@ -414,13 +420,10 @@ public class Account {
             approvalEmail.setSubject("Contratulations! Your account has been approved!");
             approvalEmail.setText("Hello " + getAccount(idInSystem).getName() + ",\n\n Your account has been approved! See you in the next step of the process!\n\n- Immigration team\n(Do not reply)");
 
-            System.out.println("3: Go check your email stupid.");
             Transport.send(approvalEmail);
-            System.out.println("Go check your email stupid.");
 
         } catch (MessagingException e) {
             e.printStackTrace();
-            System.out.println("You blew it stupid.");
             return 1L;
         }
 

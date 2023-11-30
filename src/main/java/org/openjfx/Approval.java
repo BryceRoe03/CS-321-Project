@@ -187,10 +187,6 @@ public class Approval extends Application {
                         immST.setText("Fail");
                         Workflow.updateWorkflowStatus(Status.FAIL, AcID);
                     }
-                    for (Account a : Account.getAccountList()) {
-                        System.out.println(a.toString());
-                    }
-                    System.out.println();
         });
 
         // Reject Button
@@ -203,10 +199,6 @@ public class Approval extends Application {
                     if (success) {
                         immST.setText("Fail");
                     }
-                    for (Account a : Account.getAccountList()) {
-                        System.out.println(a.toString());
-                    }
-                    System.out.println();
                 });
 
         // Clear button
@@ -305,11 +297,6 @@ public class Approval extends Application {
                         immMD.setText(immCurrent.getMedicalConditions());
                         immCR.setText(immCurrent.getCriminalRecord().toString());
                     }
-
-                    for (Account a : Account.getAccountList()) {
-                        System.out.println(a.toString());
-                    }
-                    System.out.println();
                 });
 
         // Assemble the button bar
