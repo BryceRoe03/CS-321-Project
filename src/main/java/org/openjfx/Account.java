@@ -343,11 +343,12 @@ public class Account {
      * corresponding account.
      * 
      * @param idInSystem - Long corresponding to the id for the account.
-     * @return Long - Id of the user in the system.
+     * @return Long - 0 if staus approval/1 if not.
      */
     public static long dataReview(long idInSystem) {
         // calls both validateAccount() and saveAccountToDatabase()
         // only calls save if validate passes
+
         return 0L;
     }
 
