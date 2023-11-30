@@ -195,6 +195,7 @@ public class Review extends Application {
             Account ac = null;
             long id = Workflow.getItemWithStatus(Status.REVIEW);
             if (id == -1L) {
+                System.out.println("Didn't find a new account");
                 // create a popup
                 Popup pop = new Popup();
                 Label popUpNotice = new Label("There are no more accounts to pull up.");
@@ -206,6 +207,7 @@ public class Review extends Application {
                 pop.show(primaryStage);
             }
             ac = Account.getAccount(id);
+            System.out.println("Found account: " + ac.getName());
 
             accName.setText(ac.getName());
             accEmail.setText(ac.getEmail());
