@@ -1,9 +1,6 @@
 package org.openjfx;
 
 import java.util.*;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
 
 /**
  * Workflow class object.
@@ -47,13 +44,11 @@ public class Workflow {
             Long id = tmp.next();
             if (id.equals(idInSystem)) {
                 // Update status in AccountList
-                for (Account a : Account.getAccountList()) {
-                    if (a.getIdInSystem() == idInSystem) {
-                        a.setStatus(updateStatus);
-                    }
-                }
+                Account a = Account.searchAccount(idInSystem);
+                a.setStatus(updateStatus);
+                // put at the end of the linked list
                 q.remove(id);
-                q.add(id);
+                q.addLast(id);
 
                 /*
                  * Check work using
@@ -96,6 +91,9 @@ public class Workflow {
      *         Status/-1 if failed.
      */
     public static long getItemWithStatus(Status workflowStatus) {
+        for (Account i : Account.getAccountList()) {
+            System.out.println(i.toString());
+        }
         Iterator<Long> it = q.iterator();
 
         String total = "";

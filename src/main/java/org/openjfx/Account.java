@@ -352,18 +352,15 @@ public class Account {
         // calls both validateAccount() and saveAccountToDatabase()
         // only calls save if validate passes
         Account acc = getAccount(idInSystem);
-
-        // Run tests
-        if (validateAccount(idInSystem)) {
-            acc.setStatus(Status.APPROVAL);
-            // saveAccountToDatabase(acc);
-            return 0L;
-        } else {
-            acc.setStatus(Status.FAIL);
-            // saveAccountToDatabase(acc);
-            return 1L;
+        if (acc != null) {
+            if (acc.getStatus() == Status.REVIEW) {
+                // Run tests
+                if (validateAccount(idInSystem)) {
+                    return 0L;
+                }
+            }
         }
-
+        return 1L;
     }
 
     // FOR DATA APPROVAL
@@ -378,18 +375,19 @@ public class Account {
         // calls both approveAccount() and saveAccountToDatabase()
         // only calls save if approve passes
         Account fin_acc = getAccount(idInSystem);
-        fin_acc.setStatus(Status.DONE);
 
-        approveAccount(idInSystem);
+        if (fin_acc != null) {
+            if (fin_acc.getStatus() == Status.APPROVAL) {
+                if (approveAccount(idInSystem) == 0) {
 
-        accList.remove(fin_acc);
-        // saveAccountToDatabase(fin_acc);
+                    Workflow.updateWorkflowStatus(Status.DONE, idInSystem);
 
-        if (fin_acc.getStatus() != Status.DONE) {
-            return 1L;
+                    return 0L;
+                }
+            }
         }
-
-        return 0L;
+        Workflow.updateWorkflowStatus(Status.FAIL, idInSystem);
+        return 1L;
     }
 
     /**
@@ -462,7 +460,7 @@ public class Account {
                 + ", CriminalRecord: " + criminalRecord + ", ReasonForEntry: " + reasonForEntry
                 + ", LengthOfIntendedStay: " + lengthOfIntendedStay + ", AccountUsername: " + accountUsername
                 + ", AccountPassword: " + accountPassword + ", alienNumber: " + alienNumber + ", idInSystem: "
-                + idInSystem + ", Status" + status + ", PhoneNumber: " + phoneNumber + ", AdditionalInformation: "
+                + idInSystem + ", Status: " + status + ", PhoneNumber: " + phoneNumber + ", AdditionalInformation: "
                 + additionalInformation;
     }
 

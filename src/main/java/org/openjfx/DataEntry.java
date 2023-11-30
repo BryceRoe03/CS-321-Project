@@ -206,7 +206,7 @@ public class DataEntry extends Application {
         // Event that Saves Info in Form
         submit.setOnAction(e -> {
             // make gender
-            int genderElement = 0;
+            int genderElement = -1;
             int i = 0;
             for (String gender : genderOptions) {
                 if (gender.equals(genderOptions[i])) {
@@ -229,7 +229,7 @@ public class DataEntry extends Application {
             }
 
             // make entry
-            int entryElement = 0;
+            int entryElement = -1;
             for (String gender : entryOptions) {
                 if (gender.equals(entryOptions[i])) {
                     entryElement = i;
@@ -252,6 +252,22 @@ public class DataEntry extends Application {
                 alert.show();
             }
             PhoneNumber combinedpn = new PhoneNumber(international, pn);
+
+            // Check if values are empty
+            try {
+                if (nameField.getText() == "" || emailField.getText() == "" ||
+                        dateField.getValue() == null ||
+                        genderElement == -1 || countryOfOriginField.getText() == "" ||
+                        entryElement == -1 || stayField.getText() == "" || usernameField.getText() == ""
+                        || passwordField.getText() == "" || combinedpn == null ||
+                        addInfoField.getText() == "") {
+
+                }
+            } catch (Exception e1) {
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setContentText("Required field(s) may be empty.");
+                alert.show();
+            }
 
             // call error checking on the info before trying to create an account
             int screenValidateResult = screenInfoValidate(nameField.getText(), emailField.getText(),
