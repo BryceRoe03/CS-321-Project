@@ -178,14 +178,19 @@ public class Approval extends Application {
         btnApprove.setOnAction(
                 // Make this update the workflow status
                 e -> {
-                    if (Account.dataApprove(imm) >= 0L) {
+                    long AcID = Workflow.getItemWithStatus(Status.APPROVAL);
+                    if (Account.dataApprove(AcID) >= 0L) {
                         immST.setText("Done");
-                        Workflow.updateWorkflowStatus(Status.DONE, imm);
+                        Workflow.updateWorkflowStatus(Status.DONE, AcID);
                     }
                     else {
                         immST.setText("Fail");
-                        Workflow.updateWorkflowStatus(Status.FAIL, imm);
+                        Workflow.updateWorkflowStatus(Status.FAIL, AcID);
                     }
+                    for (Account a : Account.getAccountList()) {
+                        System.out.println(a.toString());
+                    }
+                    System.out.println();
         });
 
         // Reject Button
@@ -193,9 +198,15 @@ public class Approval extends Application {
         btnReject.setOnAction(
                 // Make this update the workflow status
                 e -> {
-                    if (Workflow.updateWorkflowStatus(Status.FAIL, imm)) {
+                    long AcID = Workflow.getItemWithStatus(Status.APPROVAL);
+                    boolean success = Workflow.updateWorkflowStatus(Status.FAIL, AcID);
+                    if (success) {
                         immST.setText("Fail");
                     }
+                    for (Account a : Account.getAccountList()) {
+                        System.out.println(a.toString());
+                    }
+                    System.out.println();
                 });
 
         // Clear button
@@ -226,10 +237,11 @@ public class Approval extends Application {
         btnNext.setOnAction(
                 // Make this update the workflow status
                 e -> {
-                    Workflow newW = Workflow.getWorkflow();
+                    //Workflow newW = Workflow.getWorkflow();
+
 
                     //Workflow.updateWorkflowStatus(Status.APPROVAL, 1);
-                    long AcID = newW.getItemWithStatus(Status.APPROVAL);
+                    long AcID = Workflow.getItemWithStatus(Status.APPROVAL);
                     Account immCurrent = null;
                     immCurrent = Account.getAccount(AcID);
 
@@ -293,6 +305,11 @@ public class Approval extends Application {
                         immMD.setText(immCurrent.getMedicalConditions());
                         immCR.setText(immCurrent.getCriminalRecord().toString());
                     }
+
+                    for (Account a : Account.getAccountList()) {
+                        System.out.println(a.toString());
+                    }
+                    System.out.println();
                 });
 
         // Assemble the button bar
