@@ -192,6 +192,17 @@ public class Review extends Application {
 
             Account ac = null;
             long id = Workflow.getItemWithStatus(Status.REVIEW);
+            if (id == -1L) {
+                // create a popup
+                Popup pop = new Popup();
+                Label popUpNotice = new Label("There are no more accounts to pull up.");
+                popUpNotice.setStyle(" -fx-background-color: white;");
+                pop.getContent().add(popUpNotice);
+                // set size of label 
+                popUpNotice.setMinWidth(80);
+                popUpNotice.setMinHeight(50);
+                pop.show(primaryStage);
+            }
             ac = Account.getAccount(id);
 
             accName.setText(ac.getName());

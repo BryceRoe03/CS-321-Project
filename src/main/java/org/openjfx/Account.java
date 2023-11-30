@@ -323,8 +323,11 @@ public class Account {
      * @param idInSystem - Long corresponding to the id for the account.
      * @return Boolean - Whether the validation was successful or not.
      */
-    private Boolean validateAccount(long idInSystem) {
-        return false;
+    private static Boolean validateAccount(long idInSystem) {
+
+        // FOR TA: We were unable to find a suitable public dataset so this
+        // method is empty and always returns true.
+        return true;
     }
 
     /**
@@ -350,18 +353,16 @@ public class Account {
         // only calls save if validate passes
         Account acc = getAccount(idInSystem);
 
-        
-
-        // simulate run of data review
-        // if (((Math.random() * 2) + 1) % 2 == 0) {
+        // Run tests
+        if (validateAccount(idInSystem)) {
             acc.setStatus(Status.APPROVAL);
             saveAccountToDatabase(acc);
             return 0L;
-    //     }
-    //     else {
-    //         acc.setStatus(Status.FAIL);
-    //         return 1L;
-    //     }
+        } else {
+            acc.setStatus(Status.FAIL);
+            return 1L;
+        }
+
     }
 
     // FOR DATA APPROVAL
