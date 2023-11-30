@@ -178,8 +178,13 @@ public class Approval extends Application {
         btnApprove.setOnAction(
                 // Make this update the workflow status
                 e -> {
-                    if (Workflow.updateWorkflowStatus(Status.DONE, imm)) {
+                    if (Account.dataApprove(imm) >= 0L) {
                         immST.setText("Done");
+                        Workflow.updateWorkflowStatus(Status.DONE, imm);
+                    }
+                    else {
+                        immST.setText("Fail");
+                        Workflow.updateWorkflowStatus(Status.FAIL, imm);
                     }
         });
 
@@ -223,51 +228,71 @@ public class Approval extends Application {
                 e -> {
                     Workflow newW = Workflow.getWorkflow();
 
-                    Workflow.updateWorkflowStatus(Status.APPROVAL, 1);
+                    //Workflow.updateWorkflowStatus(Status.APPROVAL, 1);
                     long AcID = newW.getItemWithStatus(Status.APPROVAL);
                     Account immCurrent = null;
                     immCurrent = Account.getAccount(AcID);
 
-                    immName.setText(immCurrent.getName());
-                    immEM.setText(immCurrent.getEmail());
+                    if (immCurrent == null) {
+                        immEM.setText("Null");
+                        immDate.setText("Null");
+                        immMD.setText("Null");
+                        immGender.setText("Null");
+                        immCNT.setText("Null");
+                        immCR.setText("Null");
+                        immEX.setText("Null");
+                        immID.setText("Null");
+                        immEntry.setText("Null");
+                        immDuration.setText("Null");
+                        immUN.setText("Null");
+                        immPW.setText("Null");
+                        immAlien.setText("Null");
+                        immST.setText("Null");
+                        immPnum.setText("Null");
+                        immName.setText("Null");
+                    }
+                    else {
+                        immName.setText(immCurrent.getName());
+                        immEM.setText(immCurrent.getEmail());
 
-                    LocalDate birth = immCurrent.getDOB();
-                    immDate.setText("" + birth.getMonth() + "/" + birth.getDayOfMonth() + "/" + birth.getYear());
-                    if (immCurrent.getGender() == 0) {
-                        immGender.setText("Male");
-                    } else if (immCurrent.getGender() == 1) {
-                        immGender.setText("Female");
-                    } else if (immCurrent.getGender() == 2) {
-                        immGender.setText("Other");
+                        LocalDate birth = immCurrent.getDOB();
+                        immDate.setText("" + birth.getMonth() + "/" + birth.getDayOfMonth() + "/" + birth.getYear());
+                        if (immCurrent.getGender() == 0) {
+                            immGender.setText("Male");
+                        } else if (immCurrent.getGender() == 1) {
+                            immGender.setText("Female");
+                        } else if (immCurrent.getGender() == 2) {
+                            immGender.setText("Other");
+                        }
+                        immCNT.setText(immCurrent.getCountryOfOrigin());
+                        immDuration.setText(immCurrent.getLengthOfIntendedStay());
+                        immUN.setText(immCurrent.getAccountUsername());
+                        immPW.setText(immCurrent.getAccountPassword());
+                        immAlien.setText(Long.toString(immCurrent.getAlienNumber()));
+                        immID.setText(Long.toString(immCurrent.getIdInSystem()));
+                        if (immCurrent.getReasonForEntry() == 0) {
+                            immEntry.setText("Relocation");
+                        } else if (immCurrent.getReasonForEntry() == 1) {
+                            immEntry.setText("Visiting");
+                        } else if (immCurrent.getReasonForEntry() == 2) {
+                            immEntry.setText("Job Opportunity");
+                        } else if (immCurrent.getReasonForEntry() == 3) {
+                            immEntry.setText("Other");
+                        }
+                        if (immCurrent.getStatus().getStatus() == 3) {
+                            immST.setText("Approval");
+                        }
+                        else if (immCurrent.getStatus().getStatus() == 4) {
+                            immST.setText("Done");
+                        }
+                        else if (immCurrent.getStatus().getStatus() == 5) {
+                            immST.setText("Fail");
+                        }
+                        immPnum.setText(immCurrent.getPhoneNumber().toString());
+                        immEX.setText(immCurrent.getAdditionalInformation().toString());
+                        immMD.setText(immCurrent.getMedicalConditions());
+                        immCR.setText(immCurrent.getCriminalRecord().toString());
                     }
-                    immCNT.setText(immCurrent.getCountryOfOrigin());
-                    immDuration.setText(immCurrent.getLengthOfIntendedStay());
-                    immUN.setText(immCurrent.getAccountUsername());
-                    immPW.setText(immCurrent.getAccountPassword());
-                    immAlien.setText(Long.toString(immCurrent.getAlienNumber()));
-                    immID.setText(Long.toString(immCurrent.getIdInSystem()));
-                    if (immCurrent.getReasonForEntry() == 0) {
-                        immEntry.setText("Relocation");
-                    } else if (immCurrent.getReasonForEntry() == 1) {
-                        immEntry.setText("Visiting");
-                    } else if (immCurrent.getReasonForEntry() == 2) {
-                        immEntry.setText("Job Opportunity");
-                    } else if (immCurrent.getReasonForEntry() == 3) {
-                        immEntry.setText("Other");
-                    }
-                    if (immCurrent.getStatus().getStatus() == 3) {
-                        immST.setText("Approval");
-                    }
-                    else if (immCurrent.getStatus().getStatus() == 4) {
-                        immST.setText("Done");
-                    }
-                    else if (immCurrent.getStatus().getStatus() == 5) {
-                        immST.setText("Fail");
-                    }
-                    immPnum.setText(immCurrent.getPhoneNumber().toString());
-                    immEX.setText(immCurrent.getAdditionalInformation().toString());
-                    immMD.setText(immCurrent.getMedicalConditions());
-                    immCR.setText(immCurrent.getCriminalRecord().toString());
                 });
 
         // Assemble the button bar

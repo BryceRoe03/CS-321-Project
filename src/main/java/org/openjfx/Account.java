@@ -362,12 +362,18 @@ public class Account {
     public static long dataApprove(long idInSystem) {
         // calls both approveAccount() and saveAccountToDatabase()
         // only calls save if approve passes
-        if (idInSystem == 3) {
-            approveAccount(idInSystem);
-            Account fin_acc = getAccount(idInSystem);
-            fin_acc.setStatus(Status.APPROVAL);
-            saveAccountToDatabase(fin_acc);
-        }
+        System.out.println("In dataApprove\n");
+        Account fin_acc = getAccount(idInSystem);
+        fin_acc.setStatus(Status.DONE);
+
+        approveAccount(idInSystem);
+
+        accList.remove(fin_acc);
+        saveAccountToDatabase(fin_acc);
+        //Account.getAccount(idInSystem);
+        //if (idInSystem == 3) {
+            
+        //}
         return 0L;
     }
 
@@ -379,35 +385,40 @@ public class Account {
      */
     private static long approveAccount(long idInSystem) {
         final String guser = "immigranttest01@gmail.com";
-        final String gpass = "barnyard123";
+        final String gpass = "ledz qsof yjwr tbqb";
 
         Properties setup = new Properties();
         setup.put("mail.smtp.host", "smtp.gmail.com");
         setup.put("mail.smtp.auth", "true");
         setup.put("mail.smtp.port", "587");
         setup.put("mail.smtp.starttls.enable", "true");
+        System.out.println("1: Go check your email stupid.");
 
         Session sesh = Session.getInstance(setup, new javax.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(guser, gpass);
             }
-        });
+        }); 
+        
+        System.out.println("2: Go check your email stupid.");
 
         try {
             Message approvalEmail = new MimeMessage(sesh);
             approvalEmail.setFrom(new InternetAddress("immigranttest01@gmail.com"));
             approvalEmail.setRecipients(
                 Message.RecipientType.TO,
-                InternetAddress.parse("immigtanttest02@gmail.com")  
+                InternetAddress.parse(getAccount(idInSystem).getEmail())  
             );
             approvalEmail.setSubject("Contratulations! Your account has been approved!");
             approvalEmail.setText("Hello " + getAccount(idInSystem).getName() + ",\n\n Your account has been approved! See you in the next step of the process!\n\n- Immigration team\n(Do not reply)");
 
+            System.out.println("3: Go check your email stupid.");
             Transport.send(approvalEmail);
             System.out.println("Go check your email stupid.");
 
         } catch (MessagingException e) {
             e.printStackTrace();
+            System.out.println("You blew it stupid.");
             return 1L;
         }
 
@@ -461,11 +472,11 @@ public class Account {
         // KABIR: You used the private constructor instead of the public "constructor"
         // that adds to the List I changed it to addAccount
 
-        addAccount("Crew Terrys", "c.terrys@gmail.com", LocalDate.of(1973, 3, 20), 0,
+        addAccount("Crew Terrys", "immigranttest02@gmail.com", LocalDate.of(1973, 3, 20), 0,
                 "Germany", "Broken Legs", testCriminalRecord, 3, "12 days", "crews", "terrys123",
                 new PhoneNumber(1, 4834683211l), "");
 
-        addAccount("Terry Crews", "t.crews@gmail.com", LocalDate.of(1968, 7, 30), 0,
+        addAccount("Terry Crews", "immigranttest02@gmail.com", LocalDate.of(1968, 7, 30), 0,
                 "Brazil", "",
                 new CriminalRecord(), 0, "12 years", "terry", "crews123", new PhoneNumber(1, 1234567890l), "");
 
