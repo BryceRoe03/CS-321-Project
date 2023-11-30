@@ -357,7 +357,7 @@ public class Account {
      * saveToDatabase method to update any changes made to the account.
      * 
      * @param idInSystem - Long corresponding to the id for the account.
-     * @return Long - Id of the user in the system.
+     * @return Long - 0 if status done/1 if not.
      */
     public static long dataApprove(long idInSystem) {
         // calls both approveAccount() and saveAccountToDatabase()
@@ -370,10 +370,11 @@ public class Account {
 
         accList.remove(fin_acc);
         saveAccountToDatabase(fin_acc);
-        //Account.getAccount(idInSystem);
-        //if (idInSystem == 3) {
-            
-        //}
+
+        if (fin_acc.getStatus() != Status.DONE) {
+            return 1L;
+        }
+
         return 0L;
     }
 
@@ -381,7 +382,7 @@ public class Account {
      * Private method to approve the acocunt.
      * 
      * @param idInSystem - Long corresponding to the id for the account.
-     * @return Long - Id of the user in the system.
+     * @return Long - 0 if email sent/1 if not.
      */
     private static long approveAccount(long idInSystem) {
         final String guser = "immigranttest01@gmail.com";

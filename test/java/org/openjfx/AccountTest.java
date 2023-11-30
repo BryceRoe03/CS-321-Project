@@ -35,11 +35,6 @@ public class AccountTest {
      */
     @Test
     public void testGetAccount() {
-        // ac = Account.addAccount("Don Joe", "Don.Joe@gmail.com", date, 1, "Russia",
-        // "No Medical Conditions.",
-        // cr, 0, "50 days", "JohnDoe", "Doe123", pn,
-        // "No Additional Information.");
-
         // Account not null test
         assertNotNull(ac);
         // Account is an account
@@ -110,9 +105,7 @@ public class AccountTest {
      */
     @Test
     public void testDataReview() {
-        // Account ac = new Account();
-
-        // Next account to review 
+        // Next account to review
         assertEquals(0, Account.dataReview(0L));
         // Id of an account should not be less than 0
         assertFalse("testDataReview(): idInSystem should be greater than 0.", Account.dataReview(0L) < 0);
@@ -127,15 +120,12 @@ public class AccountTest {
      */
     @Test
     public void testDataApproval() {
-        // Account ac = new Account();
-
         // Next account to approve
         assertEquals(0, Account.dataApprove(0));
         // Id of an account should not be less than 0
         assertFalse("dataApprove(): should return greater than 0 if passed.", Account.dataApprove(0) < 0);
         // Id of an account should less than the max Long Value
         assertFalse("testDataReview(): idInSystem should be less than or equal to the max Value for a Long.", Account.dataReview(0L) > Long.MAX_VALUE);
-
     }
 
     /**
@@ -143,12 +133,22 @@ public class AccountTest {
      */
     @Test
     public void testSearchAccount() {
-        // filler number for now
+        // testing account that is in the database
         int alienNumber = 0;
         assertNotNull(Account.searchAccount(alienNumber));
         assertFalse("searchAccount(): should return " + alienNumber,
                 Account.searchAccount(0).getAlienNumber() != alienNumber);
-        // fail("Not Yet Implemented!");
+        // testing account that is not in the database
+        assertFalse("searchAccount(): should return null", Account.searchAccount(100000) != null);
+    }
+
+    /**
+     * Test to check the toString method for an Account.
+     */
+    @Test
+    public void testToString() {
+        System.out.println(ac.toString());
+        assertEquals("toString() does not match", ac.toString(), ac.toString());
     }
 
     /**
@@ -158,11 +158,9 @@ public class AccountTest {
     public void testGetStatus() {
         // Create an account with a given status
         ac.setStatus(Status.REVIEW);
+        // Status should be Review
         assertEquals(Status.REVIEW, ac.getStatus());
-        assertFalse("getStatus(): should return greater than 0 if passed.", ac.getStatus() != Status.REVIEW);
-        // Grab Status and compare
-        // account.status.getStatus();
-        // fail("Not Yet Implemented!");
+        // Grab Status and compare 
+        assertTrue("getStatus(): should return greater than 0 if passed.", ac.getStatus() != Status.DONE);
     }
-
 }
