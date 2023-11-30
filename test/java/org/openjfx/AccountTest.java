@@ -75,9 +75,11 @@ public class AccountTest {
         assertEquals("No Additional Information.", ac.getAdditionalInformation());
         // Account idInSystem test
         assertEquals(2L, ac.getIdInSystem());
+        // Failed idInSystem test
         assertTrue("testGetAccount(): idInSystem is less than 0.", ac.getIdInSystem() > 0L);
         // Account Alien Number
         assertEquals(2L, ac.getAlienNumber());
+        // Failed idInSystem test
         assertTrue("testGetAccount(): alienNumber is less than 0.", ac.getAlienNumber() > 0L);
         // getAccount test
         assertEquals(ac, ac.getAccount(2L));

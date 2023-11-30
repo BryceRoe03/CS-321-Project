@@ -256,7 +256,7 @@ public class DataEntry extends Application {
             }
             PhoneNumber combinedpn = new PhoneNumber(international, pn);
 
-            // Check if values are empty
+            // Generic Check: checks if required fields are empty are empty
             try {
                 if (!failed) {
                     if (nameField.getText().equals("") || emailField.getText().equals("") ||
@@ -274,7 +274,7 @@ public class DataEntry extends Application {
                 System.out.println(e1.toString());
             }
 
-            // call error checking on the info before trying to create an account
+            // Special Cases: call error checking on the info before trying to create an account
             int screenValidateResult = screenInfoValidate(nameField.getText(), emailField.getText(),
                     dateField.getValue(), usernameField.getText(), passwordField.getText(), combinedpn);
             System.out.println("screeninfovalidate value: " + screenValidateResult);
