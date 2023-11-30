@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------------
+Test set: org.openjfx.AccountTest
+-------------------------------------------------------------------------------
+Tests run: 9, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 1.709 s <<< FAILURE! - in org.openjfx.AccountTest
+org.openjfx.AccountTest.testDataReview  Time elapsed: 0.006 s  <<< FAILURE!
+java.lang.AssertionError: testDataReview(): A valid account should change status to Status.APPROVAL
+	at org.openjfx/org.openjfx.AccountTest.testDataReview(AccountTest.java:119)
+

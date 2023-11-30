@@ -114,13 +114,13 @@ public class AccountTest {
         Account.getAccount(0L).setStatus(Status.REVIEW);
         // Next account to review
         assertEquals(0L, Account.dataReview(0L));
-        // Id of an account should not be less than 0
-        assertFalse("testDataReview(): Vaild cccounts should return 0.", Account.dataReview(0L) < 0);
-        // Id of an account should less than the max Long Value
+        // Successful Data Review should update status to Approval
+        System.out.println(Account.getAccount(0L).getStatus());
+        assertTrue("testDataReview(): A valid account should change status to Status.APPROVAL", Account.getAccount(0L).getStatus() == Status.APPROVAL);
         // Set status to Created
         Account.getAccount(0L).setStatus(Status.CREATED);
-        assertFalse("testDataReview(): A valid account should change status to Status.APPROVAL",
-                Account.getAccount(0L).getStatus() == Status.APPROVAL);
+        // Should fail 
+        assertFalse("testDataReview(): Account with any status other than review should return 0.", Account.dataReview(0L) < 0);
     }
 
     /**
