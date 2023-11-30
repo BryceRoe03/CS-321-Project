@@ -205,6 +205,7 @@ public class DataEntry extends Application {
 
         // Event that Saves Info in Form
         submit.setOnAction(e -> {
+            boolean failed = false;
             // make gender
             int genderElement = -1;
             int i = 0;
@@ -241,7 +242,8 @@ public class DataEntry extends Application {
             Integer international = null;
             Long pn = null;
             try {
-                // if this date has invalid type, phone nubmer will not be set and will be caught by the catch.
+                // if this date has invalid type, phone nubmer will not be set and will be
+                // caught by the catch.
                 System.out.println(dateField.getValue().toString());
                 // make Phone Number
                 international = Integer.parseInt(pnInternationalField.getText());
@@ -250,23 +252,26 @@ public class DataEntry extends Application {
                 Alert alert = new Alert(AlertType.ERROR);
                 alert.setContentText("Error in form...\n-Verify input types entered\n-Required Information is filled");
                 alert.show();
+                failed = true;
             }
             PhoneNumber combinedpn = new PhoneNumber(international, pn);
 
             // Check if values are empty
             try {
-                if (nameField.getText() == "" || emailField.getText() == "" ||
-                        dateField.getValue() == null ||
-                        genderElement == -1 || countryOfOriginField.getText() == "" ||
-                        entryElement == -1 || stayField.getText() == "" || usernameField.getText() == ""
-                        || passwordField.getText() == "" || combinedpn == null ||
-                        addInfoField.getText() == "") {
-
+                if (!failed) {
+                    if (nameField.getText().equals("") || emailField.getText().equals("") ||
+                            dateField.getValue() == null ||
+                            genderElement == -1 || countryOfOriginField.getText().equals("") ||
+                            entryElement == -1 || stayField.getText().equals("") || usernameField.getText().equals("")
+                            || passwordField.getText().equals("") || combinedpn == null) {
+                        Alert alert = new Alert(AlertType.ERROR);
+                        alert.setContentText("Required field(s) may be empty.");
+                        alert.show();
+                        failed = true;
+                    }
                 }
             } catch (Exception e1) {
-                Alert alert = new Alert(AlertType.ERROR);
-                alert.setContentText("Required field(s) may be empty.");
-                alert.show();
+                System.out.println(e1.toString());
             }
 
             // call error checking on the info before trying to create an account
@@ -278,53 +283,59 @@ public class DataEntry extends Application {
              * If there are errors with the fields, find them and display them as an error
              * on the screen
              */
-            if (screenValidateResult != 0) {
-                String errors = "Fields with errors:";
-                for (i = 0; i < 6; i++) {
-                    // if bit is equal to 1
-                    if (((screenValidateResult >> i) & 0x1) == 1) {
-                        switch (i) {
-                            case 0:
-                                System.out.println("error 1");
-                                errors += "\n-Full Name needs to be at least two words (First and Last name.)";
-                                break;
-                            case 1:
-                                System.out.println("error 2");
-                                errors += "\n-Email needs to be valid include \"@\".";
-                                break;
-                            case 2:
-                                System.out.println("error 3");
-                                errors += "\n-Date of Birth cannot be older than 100 or be a date in the future.";
-                                break;
-                            case 3:
-                                System.out.println("error 4");
-                                errors += "\n-Username is already taken.";
-                                break;
-                            case 4:
-                                System.out.println("error 5");
-                                errors += "\n-Password needs to be longer than 7 characters.";
-                                break;
-                            case 5:
-                                System.out.println("error 6");
-                                errors += "\n-Phone Number needs to be equal to 10 numbers.";
-                                break;
+            if (!failed) {
+                if (screenValidateResult != 0) {
+                    String errors = "Fields with errors:";
+                    for (i = 0; i < 6; i++) {
+                        // if bit is equal to 1
+                        if (((screenValidateResult >> i) & 0x1) == 1) {
+                            switch (i) {
+                                case 0:
+                                    System.out.println("error 1");
+                                    errors += "\n-Full Name needs to be at least two words (First and Last name.)";
+                                    break;
+                                case 1:
+                                    System.out.println("error 2");
+                                    errors += "\n-Email needs to be valid include \"@\".";
+                                    break;
+                                case 2:
+                                    System.out.println("error 3");
+                                    errors += "\n-Date of Birth cannot be older than 100 or be a date in the future.";
+                                    break;
+                                case 3:
+                                    System.out.println("error 4");
+                                    errors += "\n-Username is already taken.";
+                                    break;
+                                case 4:
+                                    System.out.println("error 5");
+                                    errors += "\n-Password needs to be longer than 7 characters.";
+                                    break;
+                                case 5:
+                                    System.out.println("error 6");
+                                    errors += "\n-Phone Number needs to be equal to 10 numbers.";
+                                    break;
+                            }
                         }
                     }
+                    if (!failed) {
+                        Alert alert = new Alert(AlertType.ERROR);
+                        alert.setContentText(errors);
+                        alert.show();
+                    }
+                } else {
+                    // Create account if screenValidateReuslt = 0
+                    accountToAdd = Account.addAccount(nameField.getText(), emailField.getText(),
+                            dateField.getValue(),
+                            genderElement, countryOfOriginField.getText(), medicalConditionsField.getText(), crimRecord,
+                            entryElement, stayField.getText(), usernameField.getText(), passwordField.getText(),
+                            combinedpn,
+                            addInfoField.getText());
+                    Workflow.updateWorkflowStatus(Status.REVIEW, accountToAdd.getIdInSystem());
+                    Alert alert = new Alert(AlertType.INFORMATION);
+                    alert.setContentText("Your account has been sent for review.");
+                    alert.show();
                 }
-                Alert alert = new Alert(AlertType.ERROR);
-                alert.setContentText(errors);
-                alert.show();
-            } else {
-                // Create account if screenValidateReuslt = 0
-                accountToAdd = Account.addAccount(nameField.getText(), emailField.getText(),
-                        dateField.getValue(),
-                        genderElement, countryOfOriginField.getText(), medicalConditionsField.getText(), crimRecord,
-                        entryElement, stayField.getText(), usernameField.getText(), passwordField.getText(), combinedpn,
-                        addInfoField.getText());
-                Workflow.updateWorkflowStatus(Status.REVIEW, accountToAdd.getIdInSystem());
-                Alert alert = new Alert(AlertType.INFORMATION);
-                alert.setContentText("Your account has been sent for review.");
-                alert.show();
+
             }
             // On successful add/account creation
             if (accountToAdd != null) {
