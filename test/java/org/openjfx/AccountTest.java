@@ -71,13 +71,13 @@ public class AccountTest {
         // Additional Information
         assertEquals("No Additional Information.", ac.getAdditionalInformation());
         // Account idInSystem test
-        assertEquals(4L, ac.getIdInSystem());
+        assertEquals(5L, ac.getIdInSystem());
         assertTrue("testGetAccount(): idInSystem is less than 0.", ac.getIdInSystem() > 0L);
         // Account Alien Number
-        assertEquals(4L, ac.getAlienNumber());
+        assertEquals(5L, ac.getAlienNumber());
         assertTrue("testGetAccount(): alienNumber is less than 0.", ac.getAlienNumber() > 0L);
         // getAccount test
-        assertEquals(ac, ac.getAccount(4));
+        assertEquals(ac, ac.getAccount(5));
     }
 
     // For TA: Method is private, cannot test directly
@@ -147,8 +147,8 @@ public class AccountTest {
      */
     @Test
     public void testToString() {
-        System.out.println(ac.toString());
-        assertEquals("toString() does not match", ac.toString(), ac.toString());
+        // checking toString of the account.
+        assertEquals("toString() does not match", "Name: Don Joe, Email: Don.Joe@gmail.com, DateOfBirth: " + date.toString() + ", Gender: 1, CountryOfOrigin: Russia, MedicalConditions: No Medical Conditions., CriminalRecord: No Criminal Record., ReasonForEntry: 0, LengthOfIntendedStay: 50 days, AccountUsername: JohnDoe, AccountPassword: Doe123, alienNumber: 4, idInSystem: 4, StatusCREATED, PhoneNumber: " + pn.toString() + ", AdditionalInformation: No Additional Information.", ac.toString());
     }
 
     /**

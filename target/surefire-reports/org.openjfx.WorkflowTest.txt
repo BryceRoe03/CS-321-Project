@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: org.openjfx.WorkflowTest
+-------------------------------------------------------------------------------
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.077 s - in org.openjfx.WorkflowTest
