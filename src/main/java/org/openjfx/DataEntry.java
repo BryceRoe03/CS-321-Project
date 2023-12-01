@@ -202,6 +202,16 @@ public class DataEntry extends Application {
         Button clear = new Button("Clear");
         // Button Data
         ButtonBar.setButtonData(clear, ButtonData.NO);
+        // Back Button
+        Button backToHome = new Button("Home");
+        // Button Data
+        ButtonBar.setButtonData(backToHome, ButtonData.NO);
+
+        // Event that captures back to home button press
+        backToHome.setOnAction( e-> {
+            Home h = new Home();
+            h.goBackToHome(stage);
+        });
 
         // Event that Saves Info in Form
         submit.setOnAction(e -> {
@@ -400,7 +410,7 @@ public class DataEntry extends Application {
         });
 
         // Add button to the ButtonBar
-        buttonBar.getButtons().addAll(submit, clear);
+        buttonBar.getButtons().addAll(submit, clear, backToHome);
 
         // Add elements to gp
         this.gp.add(nameLabel, 0, 0);

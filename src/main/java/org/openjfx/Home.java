@@ -31,6 +31,11 @@ public class Home extends Application {
     private ArrayList accList = new ArrayList<Account>();
 
     private GridPane gp = null;
+
+    public void goBackToHome(Stage stage) {
+        this.start(stage);
+    }
+
     @Override
     public void start(Stage stage) {
         stage.setTitle("Home Screen");
