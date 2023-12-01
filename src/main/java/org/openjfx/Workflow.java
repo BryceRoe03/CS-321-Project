@@ -91,9 +91,9 @@ public class Workflow {
      *         Status/-1 if failed.
      */
     public static long getItemWithStatus(Status workflowStatus) {
-        for (Account i : Account.getAccountList()) {
-            System.out.println(i.toString());
-        }
+        // for (Account i : Account.getAccountList()) {
+        // System.out.println(i.toString());
+        // }
         Iterator<Long> it = q.iterator();
 
         String total = "";
