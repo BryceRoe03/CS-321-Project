@@ -22,7 +22,7 @@ public class AccountTest {
      */
     @BeforeClass
     public static void setUp() {
-        System.out.println("\ntestSetUp()\n");
+        // System.out.println("\ntestSetUp()\n");
         cr = new CriminalRecord();
         date = LocalDate.now();
         pn = new PhoneNumber(1, 0);
@@ -37,7 +37,7 @@ public class AccountTest {
      */
     @Test
     public void testGetAccount() {
-        System.out.println("\ntestGetAccount()\n");
+        // System.out.println("\ntestGetAccount()\n");
         // Account not null test
         assertNotNull(ac);
         // Account is an account
@@ -109,12 +109,12 @@ public class AccountTest {
      */
     @Test
     public void testDataReview() {
-        System.out.println("\ntestDataReview()\n");
+        // System.out.println("\ntestDataReview()\n");
         // Set status to Review
         Account.getAccount(0L).setStatus(Status.REVIEW);
         // Next account to review
         assertEquals(0L, Account.dataReview(0L));
-        System.out.println(Account.getAccount(0L).getStatus());
+        // System.out.println(Account.getAccount(0L).getStatus());
         // Successful Data Review should update status to Approval
         assertTrue("testDataReview(): A valid account should change status to Status.APPROVAL", Account.getAccount(0L).getStatus() == Status.APPROVAL);
         // Set status to Created
@@ -129,12 +129,12 @@ public class AccountTest {
      */
     @Test
     public void testDataApproval() {
-        System.out.println("\ntestDataApproval()\n");
+        // System.out.println("\ntestDataApproval()\n");
         // Set status to Approval
         Account.getAccount(0L).setStatus(Status.APPROVAL);
         // Next account to approve
         assertEquals(0L, Account.dataApprove(0L));
-        System.out.println(Account.getAccount(0L).getStatus());
+        // System.out.println(Account.getAccount(0L).getStatus());
         // Successful Data Approval should update status to Done
         assertTrue(
                 "A valid account should change status to Status.DONE becuase the account was approved",
@@ -151,7 +151,7 @@ public class AccountTest {
      */
     @Test
     public void testSearchAccount() {
-        System.out.println("\ntestSearchAccount()\n");
+        // System.out.println("\ntestSearchAccount()\n");
         // testing account that is in the database
         Long alienNumber = 0L;
         assertNotNull(Account.searchAccount(alienNumber));
@@ -168,7 +168,7 @@ public class AccountTest {
      */
     @Test
     public void testToString() {
-        System.out.println("\ntestToString()\n");
+        // System.out.println("\ntestToString()\n");
         // checking toString of the account.
         assertEquals("toString() does not match", "Name: Don Joe, Email: Don.Joe@gmail.com, DateOfBirth: "
                 + date.toString()
@@ -182,7 +182,7 @@ public class AccountTest {
      */
     @Test
     public void testGetStatus() {
-        System.out.println("\ntestGetStatus()\n");
+        // System.out.println("\ntestGetStatus()\n");
         // Create an account with a given status
         ac = Account.getAccount(2L);
         ac.setStatus(Status.REVIEW);
