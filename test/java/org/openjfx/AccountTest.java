@@ -114,8 +114,8 @@ public class AccountTest {
         Account.getAccount(0L).setStatus(Status.REVIEW);
         // Next account to review
         assertEquals(0L, Account.dataReview(0L));
-        // Successful Data Review should update status to Approval
         System.out.println(Account.getAccount(0L).getStatus());
+        // Successful Data Review should update status to Approval
         assertTrue("testDataReview(): A valid account should change status to Status.APPROVAL", Account.getAccount(0L).getStatus() == Status.APPROVAL);
         // Set status to Created
         Account.getAccount(0L).setStatus(Status.CREATED);
@@ -134,14 +134,16 @@ public class AccountTest {
         Account.getAccount(0L).setStatus(Status.APPROVAL);
         // Next account to approve
         assertEquals(0L, Account.dataApprove(0L));
-        // Id of an account should not be less than 0
-        assertFalse("dataApprove(): Vaild cccounts should return 0.", Account.dataApprove(0L) < 0);
-        // Id of an account should less than the max Long Value
-
-        // Set status to Created
-        Account.getAccount(0L).setStatus(Status.CREATED);
-        assertFalse("testDataReview(): A valid account should change status to Status.APPROVAL",
-                Account.getAccount(0L).getStatus() == Status.APPROVAL);
+        System.out.println(Account.getAccount(0L).getStatus());
+        // Successful Data Approval should update status to Done
+        assertTrue(
+                "A valid account should change status to Status.DONE becuase the account was approved",
+                Account.getAccount(0L).getStatus() == Status.DONE);
+        // Set status to REVIEW
+        Account.getAccount(0L).setStatus(Status.REVIEW);
+        // Should fail
+        assertFalse("Account with any status other than approval should return 0.",
+                Account.dataApprove(0L) < 0);
     }
 
     /**
@@ -153,6 +155,8 @@ public class AccountTest {
         // testing account that is in the database
         Long alienNumber = 0L;
         assertNotNull(Account.searchAccount(alienNumber));
+
+        // tests to make sure the alien number is correct
         assertFalse("searchAccount(): should return " + alienNumber,
                 Account.searchAccount(0L).getAlienNumber() != alienNumber);
         // testing account that is not in the database
@@ -179,8 +183,8 @@ public class AccountTest {
     @Test
     public void testGetStatus() {
         System.out.println("\ntestGetStatus()\n");
-        ac = Account.getAccount(2L);
         // Create an account with a given status
+        ac = Account.getAccount(2L);
         ac.setStatus(Status.REVIEW);
         // Status should be Review
         assertEquals(Status.REVIEW, ac.getStatus());

@@ -185,6 +185,11 @@ public class Review extends Application {
             }
             else {
                 System.out.println("Updated to FAIL");
+                String popUpNotice = "Account has failed vaildation.";
+                Alert noNewAccountAlert = new Alert(AlertType.WARNING);
+                noNewAccountAlert.setContentText(popUpNotice);
+                noNewAccountAlert.show();
+                return;
             }
         });
 

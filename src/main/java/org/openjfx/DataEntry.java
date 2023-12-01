@@ -46,7 +46,7 @@ public class DataEntry extends Application {
         }
 
         // Email test
-        if (!email.contains("@")) {
+        if (!email.contains("@.")) {
             allAreTrue |= (0x1 << 1);
         }
 
@@ -242,8 +242,11 @@ public class DataEntry extends Application {
             Integer international = null;
             Long pn = null;
             try {
-                // if this date has invalid type, phone nubmer will not be set and will be
-                // caught by the catch.
+                /*
+                 * If this date has invalid type, phone nubmer will not be set and will be
+                 * caught by the catch, meaning that value types for input boxes need to be
+                 * checked or some info in the table is not filled out.
+                 */
                 System.out.println(dateField.getValue().toString());
                 // make Phone Number
                 international = Integer.parseInt(pnInternationalField.getText());
@@ -296,7 +299,7 @@ public class DataEntry extends Application {
                                     break;
                                 case 1:
                                     System.out.println("error 2");
-                                    errors += "\n-Email needs to be valid include \"@\".";
+                                    errors += "\n-Email needs to be valid: \"xxxx@.xxxx\".";
                                     break;
                                 case 2:
                                     System.out.println("error 3");

@@ -356,10 +356,10 @@ public class Account {
             if (acc.getStatus() == Status.REVIEW) {
                 // Run tests
                 if (validateAccount(idInSystem)) {
-                    Workflow.updateWorkflowStatus(Status.APPROVAL, currId);
+                    Workflow.updateWorkflowStatus(Status.APPROVAL, idInSystem);
                     return 0L;
                 }
-                Workflow.updateWorkflowStatus(Status.FAIL, currId);
+                Workflow.updateWorkflowStatus(Status.FAIL, idInSystem);
             }
         }
         return 1L;
