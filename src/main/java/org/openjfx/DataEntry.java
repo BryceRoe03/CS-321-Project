@@ -46,7 +46,7 @@ public class DataEntry extends Application {
         }
 
         // Email test
-        if (!email.contains("@.")) {
+        if (!(email.contains("@") && (email.substring(email.indexOf("@")).contains(".")))) {
             allAreTrue |= (0x1 << 1);
         }
 
@@ -208,7 +208,7 @@ public class DataEntry extends Application {
         ButtonBar.setButtonData(backToHome, ButtonData.NO);
 
         // Event that captures back to home button press
-        backToHome.setOnAction( e-> {
+        backToHome.setOnAction(e -> {
             Home h = new Home();
             h.goBackToHome(stage);
         });
@@ -287,7 +287,8 @@ public class DataEntry extends Application {
                 System.out.println(e1.toString());
             }
 
-            // Special Cases: call error checking on the info before trying to create an account
+            // Special Cases: call error checking on the info before trying to create an
+            // account
             int screenValidateResult = screenInfoValidate(nameField.getText(), emailField.getText(),
                     dateField.getValue(), usernameField.getText(), passwordField.getText(), combinedpn);
             System.out.println("screeninfovalidate value: " + screenValidateResult);
@@ -309,7 +310,7 @@ public class DataEntry extends Application {
                                     break;
                                 case 1:
                                     System.out.println("error 2");
-                                    errors += "\n-Email needs to be valid: \"xxxx@.xxxx\".";
+                                    errors += "\n-Email needs to be valid: \"xxxx@xxx.xxx\".";
                                     break;
                                 case 2:
                                     System.out.println("error 3");
