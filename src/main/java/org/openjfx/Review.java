@@ -182,11 +182,9 @@ public class Review extends Application {
 
             if (Account.dataReview(currId) == 0) {
                 System.out.println("Updated to APPROVAL");
-                Workflow.updateWorkflowStatus(Status.APPROVAL, currId);
             }
             else {
                 System.out.println("Updated to FAIL");
-                Workflow.updateWorkflowStatus(Status.FAIL, currId);
             }
         });
 
