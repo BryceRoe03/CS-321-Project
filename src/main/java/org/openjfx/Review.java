@@ -182,6 +182,11 @@ public class Review extends Application {
 
             if (Account.dataReview(currId) == 0) {
                 System.out.println("Updated to APPROVAL");
+                String popUpNotice = "Account has passed vaildation!";
+                Alert noNewAccountAlert = new Alert(AlertType.CONFIRMATION);
+                noNewAccountAlert.setContentText(popUpNotice);
+                noNewAccountAlert.show();
+                return;
             }
             else {
                 System.out.println("Updated to FAIL");
