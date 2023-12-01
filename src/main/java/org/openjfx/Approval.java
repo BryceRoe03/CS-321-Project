@@ -196,9 +196,9 @@ public class Approval extends Application {
                 // Make this update the workflow status
                 e -> {
                     long AcID = Workflow.getItemWithStatus(Status.APPROVAL);
-                    boolean success = Workflow.updateWorkflowStatus(Status.FAIL, AcID);
+                    boolean success = Workflow.updateWorkflowStatus(Status.REVIEW, AcID);
                     if (success) {
-                        immST.setText("Fail");
+                        immST.setText("Marked for Review");
                     }
                 });
 
@@ -286,6 +286,9 @@ public class Approval extends Application {
                         }
                         if (immCurrent.getStatus().getStatus() == 3) {
                             immST.setText("Approval");
+                        }
+                        else if (immCurrent.getStatus().getStatus() == 2) {
+                            immST.setText("Review");
                         }
                         else if (immCurrent.getStatus().getStatus() == 4) {
                             immST.setText("Done");
