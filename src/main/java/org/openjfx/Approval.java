@@ -8,7 +8,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar;  
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.layout.GridPane;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -299,21 +300,21 @@ public class Approval extends Application {
                     }
                 });
 
+        // Home button
+        Button btnHome = new Button("Home");
+            
+        btnHome.setOnAction( e-> {
+            // Displays the home screen again
+            Home backHome = new Home();
+            backHome.goBackToHome(mainStage);
+        });
+
         // Assemble the button bar
         ButtonBar bar = new ButtonBar();
-        bar.getButtons().addAll(btnApprove, btnReject, btnClear, btnNext);
+        bar.getButtons().addAll(btnApprove, btnReject, btnClear, btnNext, btnHome);
 
         this.grid.add(bar, 0, 16, 1, 1);
-
-        
-
-        // Column constraints
-        
-
-        
-
         this.grid.setAlignment(Pos.CENTER);
-
     }
 
 }
