@@ -148,11 +148,13 @@ public class Review extends Application {
         Button nextApplicationButton = new Button("Next Application");
         Button clearButton = new Button("Clear");
         Button runTestButton = new Button("Run Tests");
+        Button home = new Button("Home");
 
         clearButton.setMinWidth(bar.getPrefWidth());
         runTestButton.setMinWidth(bar.getPrefWidth());
         nextApplicationButton.setMinWidth(bar.getPrefWidth());
-        bar.getChildren().addAll(runTestButton, nextApplicationButton, clearButton);
+        home.setMinWidth(bar.getPrefHeight());
+        bar.getChildren().addAll(runTestButton, nextApplicationButton, clearButton, home);
         BorderPane.setAlignment(bar, Pos.CENTER);
         this.base.setBottom(bar);
 
@@ -271,6 +273,11 @@ public class Review extends Application {
             }
             accPhoneNum.setText(ac.getPhoneNumber().toString());
             accExtraInfo.setText(ac.getAdditionalInformation());
+        });
+
+        home.setOnAction(e -> {
+            Home homeScreen = new Home();
+            homeScreen.goBackToHome(primaryStage);
         });
 
     }
